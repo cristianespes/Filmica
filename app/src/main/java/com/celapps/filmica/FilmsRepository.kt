@@ -11,8 +11,11 @@ object FilmsRepository { // Todo estará en un contexto estático
         return field
     }
 
-    private fun dummyFilms(): List<Film> {
+    fun findFilmById(id: String): Film? {
+        return films.find { film -> film.id == id }
+    }
 
+    private fun dummyFilms(): List<Film> {
         return (0..9).map {
             Film(
                     title = "Film $it",
@@ -22,20 +25,5 @@ object FilmsRepository { // Todo estará en un contexto estático
                     overview = "Overview $it"
                 )
         }
-
-//        val films: MutableList<Film> = mutableListOf()
-//        for (i in 1..9) {
-//            films.add(
-//                Film(
-//                    title = "Film ${i}",
-//                    genre = "Genre ${i}",
-//                    release = "200${i}-0${i}-0${i}",
-//                    voteRating = i.toDouble(),
-//                    overview = "Overview ${i}"
-//                )
-//            )
-//        }
-//        return films
-
     }
 }

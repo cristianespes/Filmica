@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class FilmsAdapter: RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
+class FilmsAdapter(var itemClickListener: ((Film) -> Unit)? = null): RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
 
     private val list = mutableListOf<Film>() // Lista vacía
 
@@ -44,6 +44,14 @@ class FilmsAdapter: RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
             field = value
             // Lo asignamos también a la vista
             itemView.findViewById<TextView>(R.id.label_title).text = value?.title
+        }
+
+        init {
+            this.itemView.setOnClickListener {
+                film?.let {
+                    itemClickListener?.invoke(it)
+                }
+            }
         }
     }
 

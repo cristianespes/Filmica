@@ -3,37 +3,49 @@ package com.celapps.filmica
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.View
-import android.widget.Button
+import kotlinx.android.synthetic.main.activity_films.*
 
-class FilmsActivity: AppCompatActivity() {
+class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener {
+    override fun onItemClicked(film: Film) {
+        this.showDetails(film.id)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_films)
 
-//        val button : Button = findViewById(R.id.btn_film)
-//        button.setOnClickListener {
-//            Log.d(FilmsActivity::class.java.canonicalName, "Button was clicked")
-//
-//            val intentToDetails: Intent = Intent(this, DetailsActivity::class.java)
-//            startActivity(intentToDetails)
-//        }
+        if (savedInstanceState == null) {
+            val filmsFragment = FilmsFragment() // Creamos fragmento
 
-        val list = findViewById<RecyclerView>(R.id.list_films)
-        list.layoutManager = LinearLayoutManager(this)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container_list, filmsFragment)
+                .commit()
+        }
 
-        val adapter= FilmsAdapter()
-        list.adapter = adapter
-        adapter.setFilms(FilmsRepository.films)
     }
 
-    fun showDetails(clickedView: View) {
-        val intentToDetails = Intent(this, DetailsActivity::class.java)
-        startActivity(intentToDetails)
+    fun showDetails(id: String) {
+        if (isTablet())
+            showDetailsFragment(id)
+        else
+            launchDetailsActivity(id)
+    }
+
+    private fun isTablet() = this.containerDetails != null
+
+
+    private fun showDetailsFragment(id: String) {
+        val detailsFragment = DetailsFragment.newInstance(id)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.containerDetails, detailsFragment)
+            .commit()
+    }
+
+    private fun launchDetailsActivity(id: String) {
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
     }
 
 }
