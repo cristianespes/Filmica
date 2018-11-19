@@ -37,7 +37,7 @@
                 tools:text="Film" />
 
             <TextView
-                android:id="@+id/labelGenre"
+                android:id="@+id/titleGenre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
