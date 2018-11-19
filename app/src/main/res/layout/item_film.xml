@@ -1,11 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/label_title"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textStyle="bold"
-    android:textSize="18sp"
-    tools:text="Film 1">
+    android:layout_height="196dp">
 
-</TextView>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="16dp"
+        android:background="@color/colorPrimary" >
+
+        <TextView
+            android:id="@+id/labelTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:maxLines="1"
+            android:layout_marginBottom="8dp"
+            tools:text="Film" />
+
+        <TextView
+            android:id="@+id/labelGenre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/labelTitle"
+            android:layout_toLeftOf="@id/labelVotes"
+            android:layout_toStartOf="@id/labelVotes"
+            android:maxLines="1"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            tools:text="Genre" />
+
+        <TextView
+            android:id="@+id/labelVotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/labelTitle"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:maxLength="4"
+            android:drawableLeft="@drawable/ic_votes"
+            android:drawableStart="@drawable/ic_votes"
+            android:drawablePadding="4dp"
+            tools:text="0.0"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
