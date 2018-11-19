@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import kotlinx.android.synthetic.main.item_film.view.*
 
 class FilmsAdapter(var itemClickListener: ((Film) -> Unit)? = null): RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
 
@@ -42,8 +43,15 @@ class FilmsAdapter(var itemClickListener: ((Film) -> Unit)? = null): RecyclerVie
         set(value) {
             // Actualizamos la película
             field = value
-            // Lo asignamos también a la vista
-            itemView.findViewById<TextView>(R.id.label_title).text = value?.title
+
+            value?.let {
+                // Lo asignamos también a la vista
+                with(itemView) {
+                    labelTitle.text = value.title
+                    labelGenre.text = value.genre
+                    labelVotes.text = value.voteRating.toString()
+                }
+            }
         }
 
         init {
