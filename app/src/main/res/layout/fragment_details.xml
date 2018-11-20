@@ -15,11 +15,12 @@
             android:id="@+id/imgPoster"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:srcCompat="?attr/colorPrimary" />
+            app:srcCompat="@drawable/placeholder" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline"
@@ -72,7 +73,7 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline"
-            app:srcCompat="?attr/colorAccent" />
+            app:srcCompat="@drawable/ic_movieroll" />
 
         <TextView
             android:id="@+id/titleGenre"
@@ -82,6 +83,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_genre"
+            android:drawableLeft="@drawable/ic_genre"
+            android:drawablePadding="4dp"
             android:text="@string/label_genre"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
@@ -91,6 +95,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="TextView"
@@ -107,6 +113,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_release"
+            android:drawableLeft="@drawable/ic_release"
+            android:drawablePadding="4dp"
             android:text="@string/label_release"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelGenre" />
@@ -116,6 +125,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
             app:layout_constraintStart_toStartOf="@+id/titleRelease"
             app:layout_constraintTop_toBottomOf="@+id/titleRelease"
             tools:text="2010-10-10" />
@@ -128,6 +139,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_overview"
+            android:drawableLeft="@drawable/ic_overview"
+            android:drawablePadding="4dp"
             android:text="@string/label_overview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelRelease" />
@@ -137,6 +151,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="Lorem Ipsum"
