@@ -4,4 +4,6 @@
     <string name="label_genre">Genre</string>
     <string name="label_release">Release</string>
     <string name="label_overview">Overview</string>
+    <string name="error_request">Oppps, something bad happened, please try again</string>
+    <string name="label_retry">Retry</string>
 </resources>
