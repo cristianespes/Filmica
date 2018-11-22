@@ -1,5 +1,6 @@
 package com.celapps.filmica.view.films
 
+import android.graphics.Bitmap
 import android.support.v4.content.ContextCompat
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.RecyclerView
@@ -56,31 +57,7 @@ class FilmsAdapter(var itemClickListener: ((Film) -> Unit)? = null): RecyclerVie
                     titleGenre.text = value.genre
                     labelVotes.text = value.voteRating.toString()
 
-                    val target = SimpleTarget(
-                        successCallback = { bitmap, from ->
-
-                            // Adjuntamos la imagen
-                            imgPoster.setImageBitmap(bitmap) // Seteamos el método setImageBitmap en FadeImageView
-
-                            // Añadir el color el bitmap al contenedor
-                            Palette.from(bitmap).generate { palette ->
-                                val defaultColor = ContextCompat.getColor(itemView.context, R.color.colorPrimary) // Color por defecto si no extrae ninguno
-                                val swatch = palette?.vibrantSwatch ?: palette?.dominantSwatch // vibrantSwatch no siempre obtiene resultado, domiantSwatch suele obtener más
-                                val color = swatch?.rgb ?: defaultColor // tomamos el rgb generado por el swatch o en su defecto el que indicamos por defecto
-
-                                container.setBackgroundColor(color)
-                                containerData.setBackgroundColor(color)
-                            }
-                        }
-                    )
-
-                    // Strong Reference para que no destruya la instancia del target
-                    imgPoster.tag = target
-
-                    Picasso.get()
-                        .load(value.getPosterUrl())
-                        .error(R.drawable.placeholder)
-                        .into(target)
+                    loadImage()
                 }
             }
         }
@@ -90,6 +67,37 @@ class FilmsAdapter(var itemClickListener: ((Film) -> Unit)? = null): RecyclerVie
                 film?.let {
                     itemClickListener?.invoke(it)
                 }
+            }
+        }
+
+        private fun loadImage() {
+            val target = SimpleTarget(
+                successCallback = { bitmap, from ->
+                    // Adjuntamos la imagen
+                    itemView.imgPoster.setImageBitmap(bitmap) // Seteamos el método setImageBitmap en FadeImageView
+
+                    // Añadir el color el bitmap al contenedor
+                    setColorFrom(bitmap)
+                }
+            )
+
+            // Strong Reference para que no destruya la instancia del target
+            itemView.imgPoster.tag = target
+
+            Picasso.get()
+                .load(film?.getPosterUrl())
+                .error(R.drawable.placeholder)
+                .into(target)
+        }
+
+        private fun setColorFrom(bitmap: Bitmap) {
+            Palette.from(bitmap).generate { palette ->
+                val defaultColor = ContextCompat.getColor(itemView.context, R.color.colorPrimary) // Color por defecto si no extrae ninguno
+                val swatch = palette?.vibrantSwatch ?: palette?.dominantSwatch // vibrantSwatch no siempre obtiene resultado, domiantSwatch suele obtener más
+                val color = swatch?.rgb ?: defaultColor // tomamos el rgb generado por el swatch o en su defecto el que indicamos por defecto
+
+                itemView.container.setBackgroundColor(color)
+                itemView.containerData.setBackgroundColor(color)
             }
         }
     }
