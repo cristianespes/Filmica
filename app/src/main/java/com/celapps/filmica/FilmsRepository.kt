@@ -39,28 +39,29 @@ object FilmsRepository { // Todo estará en un contexto estático
                       callbackError: ((VolleyError) -> Unit)) {
 
         if (this.films.isEmpty()) {
+            requestDiscoverFilms(callbackSuccess, callbackError, context)
+        } else {
+            callbackSuccess.invoke(this.films)
+        }
+    }
 
-            //TODO: EXTRAER COMO FUNCION INLINE
-            val url = ApiRoutes.discoverUrl()
+    private fun requestDiscoverFilms(
+        callbackSuccess: (MutableList<Film>) -> Unit,
+        callbackError: (VolleyError) -> Unit,
+        context: Context
+    ) {
+        val url = ApiRoutes.discoverUrl()
 
-            val request = JsonObjectRequest(Request.Method.GET, url, null,
-                {response ->
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            {response ->
                 this.films.addAll(Film.parseFilms(response))
                 callbackSuccess.invoke(this.films)
             }, {error ->
                 callbackError.invoke(error)
             })
 
-            Volley.newRequestQueue(context)
-                .add(request)
-
-        } else {
-
-            callbackSuccess.invoke(this.films)
-
-        }
-
-
+        Volley.newRequestQueue(context)
+            .add(request)
     }
 
 }
