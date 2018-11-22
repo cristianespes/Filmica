@@ -1,4 +1,4 @@
-package com.celapps.filmica
+package com.celapps.filmica.view.util
 
 import android.graphics.Rect
 import android.support.annotation.DimenRes

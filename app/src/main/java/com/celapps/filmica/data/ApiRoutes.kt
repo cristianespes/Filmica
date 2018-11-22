@@ -1,6 +1,7 @@
-package com.celapps.filmica
+package com.celapps.filmica.data
 
 import android.net.Uri
+import com.celapps.filmica.BuildConfig
 
 object ApiRoutes {
     // Método para introducir la petición a la API con posibilidad de variar parámetros

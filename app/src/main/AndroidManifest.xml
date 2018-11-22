@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".FilmsActivity">
+        <activity android:name=".view.films.FilmsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DetailsActivity" />
+        <activity android:name=".view.details.DetailsActivity" />
 
     </application>
 

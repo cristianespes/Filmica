@@ -1,7 +1,8 @@
-package com.celapps.filmica
+package com.celapps.filmica.view.details
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.celapps.filmica.R
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -12,7 +13,8 @@ class DetailsActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             val id = intent.getStringExtra("id")
 
-            val detailsFragment = DetailsFragment.newInstance(id) // Creamos fragmento
+            val detailsFragment =
+                DetailsFragment.newInstance(id) // Creamos fragmento
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.container_details, detailsFragment)

@@ -1,16 +1,10 @@
-package com.celapps.filmica
+package com.celapps.filmica.data
 
 import android.content.Context
-import android.net.Uri
-import android.support.v4.os.ConfigurationCompat
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONArray
-import org.json.JSONObject
-import java.util.*
 
 // Singleton
 object FilmsRepository { // Todo estará en un contexto estático
@@ -23,12 +17,12 @@ object FilmsRepository { // Todo estará en un contexto estático
     private fun dummyFilms(): List<Film> {
         return (0..9).map {
             Film(
-                    title = "Film $it",
-                    genre = "Genre $it",
-                    release = "200$it-0$it-0$it",
-                    voteRating = it.toDouble(),
-                    overview = "Overview $it"
-                )
+                title = "Film $it",
+                genre = "Genre $it",
+                release = "200$it-0$it-0$it",
+                voteRating = it.toDouble(),
+                overview = "Overview $it"
+            )
         }
     }
 
@@ -38,10 +32,10 @@ object FilmsRepository { // Todo estará en un contexto estático
                       callbackSuccess: ((MutableList<Film>) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
 
-        if (this.films.isEmpty()) {
+        if (films.isEmpty()) {
             requestDiscoverFilms(callbackSuccess, callbackError, context)
         } else {
-            callbackSuccess.invoke(this.films)
+            callbackSuccess.invoke(films)
         }
     }
 
@@ -54,8 +48,12 @@ object FilmsRepository { // Todo estará en un contexto estático
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
-                this.films.addAll(Film.parseFilms(response))
-                callbackSuccess.invoke(this.films)
+                films.addAll(
+                    Film.parseFilms(
+                        response
+                    )
+                )
+                callbackSuccess.invoke(films)
             }, {error ->
                 callbackError.invoke(error)
             })

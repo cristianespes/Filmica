@@ -1,4 +1,4 @@
-package com.celapps.filmica
+package com.celapps.filmica.data
 
 import org.json.JSONArray
 import org.json.JSONObject

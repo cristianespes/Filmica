@@ -1,4 +1,4 @@
-package com.celapps.filmica
+package com.celapps.filmica.view.films
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.celapps.filmica.R
+import com.celapps.filmica.data.Film
+import com.celapps.filmica.data.FilmsRepository
+import com.celapps.filmica.view.util.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_films.*
 import kotlinx.android.synthetic.main.layout_error.*
 

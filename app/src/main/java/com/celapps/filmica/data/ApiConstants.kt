@@ -1,4 +1,4 @@
-package com.celapps.filmica
+package com.celapps.filmica.data
 
 object ApiConstants {
     val genres: Map<Int, String> = mapOf(
