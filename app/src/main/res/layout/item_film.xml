@@ -8,20 +8,19 @@
     app:cardCornerRadius="4dp" >
 
     <FrameLayout
-
-        android:id="@+id/label_title"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="196dp">
+        android:layout_height="196dp"
+        android:background="@color/colorPrimaryDark">
 
-        <ImageView
+        <com.celapps.filmica.view.util.FadeImageView
             android:id="@+id/imgPoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/placeholder"/>
+            android:scaleType="centerCrop" />
 
         <RelativeLayout
+            android:id="@+id/containerData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
