@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.celapps.filmica.R
 import com.celapps.filmica.data.FilmsRepository
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment: Fragment() {
@@ -40,6 +41,12 @@ class DetailsFragment: Fragment() {
                 labelOverview.text = overview
                 labelGenre.text = genre
                 labelRelease.text = release
+
+                Picasso.get()
+                    .load(getPosterUrl())
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.placeholder)
+                    .into(imgPoster)
             }
         }
 

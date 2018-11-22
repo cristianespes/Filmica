@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_film.view.*
 
 class FilmsAdapter(var itemClickListener: ((Film) -> Unit)? = null): RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
@@ -51,6 +52,12 @@ class FilmsAdapter(var itemClickListener: ((Film) -> Unit)? = null): RecyclerVie
                     labelTitle.text = value.title
                     titleGenre.text = value.genre
                     labelVotes.text = value.voteRating.toString()
+
+                    Picasso.get()
+                        .load(value.getPosterUrl())
+                        .placeholder(R.drawable.placeholder)
+                        .error(R.drawable.placeholder)
+                        .into(imgPoster)
                 }
             }
         }
