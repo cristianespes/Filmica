@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_discover"
+        android:checked="true"
+        android:icon="@drawable/ic_discover"
+        android:title="@string/title_discover" />
+
+    <item android:id="@+id/action_watchlist"
+        android:icon="@drawable/ic_watchlist"
+        android:title="@string/title_watchlist" />
+</menu>
