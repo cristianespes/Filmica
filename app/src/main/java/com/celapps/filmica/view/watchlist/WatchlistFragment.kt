@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_watchlist.*
 
 import com.celapps.filmica.R
+import com.celapps.filmica.data.FilmsRepository
 
 class WatchlistFragment : Fragment() {
 
@@ -29,6 +30,14 @@ class WatchlistFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         watchlist.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        FilmsRepository.watchlist(context!!) {films ->
+            adapter.setFilms(films.toMutableList())
+        }
     }
 
 }

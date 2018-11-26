@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.*
 
 // Singleton
 object FilmsRepository { // Todo estará en un contexto estático
@@ -71,9 +72,17 @@ object FilmsRepository { // Todo estará en un contexto estático
 
     }
 
-    fun watchlist(context: Context) : List<Film> {
-        val db = getDbInstance(context)
-        return db.filmDao().getFilms()
+    fun watchlist(context: Context, callbackSuccess: ((List<Film>) -> Unit)) {
+
+        GlobalScope.launch(Dispatchers.Main) {
+            val async = async(Dispatchers.IO) {
+                val db = getDbInstance(context)
+                db.filmDao().getFilms()
+            }
+
+            val films: List<Film> = async.await()
+            callbackSuccess.invoke(films)
+        }
     }
 
     fun deleteFilm(context: Context, film: Film) {
