@@ -1,16 +1,27 @@
 package com.celapps.filmica.data
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
+import android.arch.persistence.room.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 
-data class Film(val id: String = UUID.randomUUID().toString(),
-                var title: String = "",
-                var genre: String = "",
-                var release: String = "",
-                var voteRating: Double = 0.0,
-                var overview: String = "",
-                var poster: String = "") {
+@Entity
+data class Film(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    @ColumnInfo (name = "vote_rating") var voteRating: Double = 0.0,
+    var title: String = "",
+    var genre: String = "",
+    var release: String = "",
+    var overview: String = "",
+    var poster: String = ""
+) {
+
+    // Si intento ejecutar una creación sin argumento, ignorar esa insercción a la BBDD
+    @Ignore
+    constructor(): this("")
 
     fun getPosterUrl() : String {
         return "$BASE_POSTER_URL$poster"

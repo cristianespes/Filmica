@@ -1,14 +1,31 @@
 package com.celapps.filmica.data
 
+import android.arch.persistence.room.Room
 import android.content.Context
 import com.android.volley.Request
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 // Singleton
 object FilmsRepository { // Todo estará en un contexto estático
     private val films: MutableList<Film> = mutableListOf()
+
+    @Volatile // Para que se pueda ejecuta en otro thread
+    private var db: AppDatabase? = null
+    //databaseBuilder solo debe ser ejecutado una vez, sino generará problemas
+
+    private fun getDbInstance(context: Context) : AppDatabase {
+        if (db == null) {
+            db = Room.databaseBuilder(context, AppDatabase::class.java, "filmica-db").build()
+        }
+
+        return db as AppDatabase
+    }
 
     fun findFilmById(id: String): Film? {
         return films.find { film -> film.id == id }
@@ -37,6 +54,31 @@ object FilmsRepository { // Todo estará en un contexto estático
         } else {
             callbackSuccess.invoke(films)
         }
+    }
+
+    fun saveFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)) {
+
+        GlobalScope.launch(Dispatchers.Main) {
+            val async = async(Dispatchers.IO) {
+                val db = getDbInstance(context)
+                db.filmDao().insertFilm(film)
+            }
+
+            async.await()
+            callbackSuccess.invoke(film)
+        }
+
+
+    }
+
+    fun watchlist(context: Context) : List<Film> {
+        val db = getDbInstance(context)
+        return db.filmDao().getFilms()
+    }
+
+    fun deleteFilm(context: Context, film: Film) {
+        val db = getDbInstance(context)
+        db.filmDao().deleteFilm(film)
     }
 
     private fun requestDiscoverFilms(
