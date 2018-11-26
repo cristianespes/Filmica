@@ -1,5 +1,6 @@
 package com.celapps.filmica.view.details
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -7,9 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.graphics.Palette
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
@@ -33,35 +32,74 @@ class DetailsFragment: Fragment() {
         }
     }
 
+    private var film: Film? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true) // para avisar que vamos a crear un menú
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_details, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_details, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val id: String = arguments?.getString("id") ?: ""
-        val film = FilmsRepository.findFilmById(id)
+        film = FilmsRepository.findFilmById(id)
 
         film?.let {
-            with(film) {
+            with(it) {
                 labelTitle.text = title // podemos utilizar el id indicado en el activity gracias al plugin android-extension
                 labelOverview.text = overview
                 labelGenre.text = genre
                 labelRelease.text = release
                 labelVotes.text = voteRating.toString()
 
-                loadImage(film)
+                loadImage(it)
             }
         }
 
         btnAdd.setOnClickListener {
             film?.let {
-                FilmsRepository.saveFilm(context!!, film) {
+                FilmsRepository.saveFilm(context!!, it) {
                     Toast.makeText(context, "Added to list", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        // Validar que es el item que esperamos
+        //if (item?.itemId == R.id.action_share) {
+            // Code
+        //}
+
+        item.takeIf { item?.itemId == R.id.action_share }?.let {menuItem ->
+            shareFilm()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun shareFilm() {
+        val intent = Intent(Intent.ACTION_SEND)
+
+        // Validar que el film no sea nulo
+        film?.let {
+            val text = getString(R.string.template_share, it.title, it.voteRating)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, text)
+        }
+
+        startActivity(Intent.createChooser(intent, getString(R.string.title_share)))
     }
 
     private fun loadImage(film: Film) {
