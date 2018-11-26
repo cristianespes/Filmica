@@ -42,5 +42,13 @@ open class BaseFilmAdapter<VH: BaseFilmHolder>(
         notifyDataSetChanged()
     }
 
+    fun getFilm(position: Int) : Film {
+        return list.get(position)
+    }
+
+    fun removeFilmAt(position: Int) {
+        list.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
 }

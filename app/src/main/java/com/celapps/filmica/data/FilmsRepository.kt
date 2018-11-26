@@ -73,7 +73,6 @@ object FilmsRepository { // Todo estará en un contexto estático
     }
 
     fun watchlist(context: Context, callbackSuccess: ((List<Film>) -> Unit)) {
-
         GlobalScope.launch(Dispatchers.Main) {
             val async = async(Dispatchers.IO) {
                 val db = getDbInstance(context)
@@ -85,9 +84,15 @@ object FilmsRepository { // Todo estará en un contexto estático
         }
     }
 
-    fun deleteFilm(context: Context, film: Film) {
-        val db = getDbInstance(context)
-        db.filmDao().deleteFilm(film)
+    fun deleteFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val async = async(Dispatchers.IO) {
+                val db = getDbInstance(context)
+                db.filmDao().deleteFilm(film)
+            }
+            async.await()
+            callbackSuccess.invoke(film)
+        }
     }
 
     private fun requestDiscoverFilms(
