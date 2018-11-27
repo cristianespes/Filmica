@@ -21,6 +21,17 @@ object ApiRoutes {
             .toString()
     }
 
+    // Método para hacer la petición de los datos Trending
+    fun trendingUrl(): String {
+
+        return getUriBuilder()
+            .appendPath("trending")
+            .appendPath("all")
+            .appendPath("day")
+            .build()
+            .toString()
+    }
+
     private fun getUriBuilder() =
         Uri.Builder()
             .scheme("https")

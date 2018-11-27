@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
+import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -43,12 +44,29 @@ data class Film(
 
         // Método para parsear el objeto Json de la película y devolver un objeto película
         fun parseFilm(jsonFilm: JSONObject) : Film {
+
+            var title = ""
+            if (jsonFilm.has("title")) {
+                title = jsonFilm.getString("title")
+            } else {
+                title = jsonFilm.getString("name")
+            }
+
+            var date = ""
+            if (jsonFilm.has("release_date")) {
+                date = jsonFilm.getString("release_date")
+            } else {
+                date = "Undated"
+            }
+
             return Film(
                 id = jsonFilm.getInt("id").toString(),
-                title = jsonFilm.getString("title"),
+                // title es opcional
+                title = title,
                 overview = jsonFilm.getString("overview"),
                 voteRating = jsonFilm.getDouble("vote_average"),
-                release = jsonFilm.getString("release_date"),
+                // release_date es opcional
+                release = date,
                 poster = jsonFilm.optString("poster_path", ""),
                 genre = parseGenres(jsonFilm.getJSONArray("genre_ids"))
             )

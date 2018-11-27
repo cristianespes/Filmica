@@ -2,6 +2,7 @@ package com.celapps.filmica.data
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
@@ -10,11 +11,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.util.*
 
 // Singleton
 object FilmsRepository { // Todo estará en un contexto estático
     private val films: MutableList<Film> = mutableListOf()
+    private val trendingFilms: MutableList<Film> = mutableListOf()
 
     @Volatile // Para que se pueda ejecuta en otro thread
     private var db: AppDatabase? = null
@@ -45,7 +46,7 @@ object FilmsRepository { // Todo estará en un contexto estático
     }
 
 
-    // Método para realizar la petición GET a la API
+    // Método para realizar la petición GET del discover a la API
     fun discoverFilms(context: Context,
                       callbackSuccess: ((MutableList<Film>) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
@@ -54,6 +55,19 @@ object FilmsRepository { // Todo estará en un contexto estático
             requestDiscoverFilms(callbackSuccess, callbackError, context)
         } else {
             callbackSuccess.invoke(films)
+        }
+    }
+
+    // TODO: ULTIMO MÉTODO INSERTADO, SEGUIR POR AQUÍ
+    // Método para realizar la petición GET del Trending a la API
+    fun trendingFilms(context: Context,
+                      callbackSuccess: ((MutableList<Film>) -> Unit),
+                      callbackError: ((VolleyError) -> Unit)) {
+
+        if (trendingFilms.isEmpty()) {
+            requestTrendingFilms(callbackSuccess, callbackError, context)
+        } else {
+            callbackSuccess.invoke(trendingFilms)
         }
     }
 
@@ -101,6 +115,29 @@ object FilmsRepository { // Todo estará en un contexto estático
         context: Context
     ) {
         val url = ApiRoutes.discoverUrl()
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            {response ->
+                films.addAll(
+                    Film.parseFilms(
+                        response
+                    )
+                )
+                callbackSuccess.invoke(films)
+            }, {error ->
+                callbackError.invoke(error)
+            })
+
+        Volley.newRequestQueue(context)
+            .add(request)
+    }
+
+    private fun requestTrendingFilms(
+        callbackSuccess: (MutableList<Film>) -> Unit,
+        callbackError: (VolleyError) -> Unit,
+        context: Context
+    ) {
+        val url = ApiRoutes.trendingUrl()
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
