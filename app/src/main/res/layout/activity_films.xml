@@ -18,9 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:itemTextColor="@android:color/white"
-        app:itemTextAppearanceActive="@style/Title.White"
         app:itemIconTint="@android:color/white"
+        app:itemTextAppearanceActive="@style/Title.White"
+        app:itemTextColor="@android:color/white"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation">
 
     </android.support.design.widget.BottomNavigationView>

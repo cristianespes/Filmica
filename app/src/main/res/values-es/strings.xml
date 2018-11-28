@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Filmica</string>
+    <string name="label_add">Añadir a la lista de seguimiento</string>
+    <string name="label_genre">Género</string>
+    <string name="label_release">Lanzamiento</string>
+    <string name="label_overview">Reseña</string>
+    <string name="error_request">Oppps, algo ha ido mal, por favor inténtalo de nuevo</string>
+    <string name="label_retry">Reintentar</string>
+    <string name="title_watchlist">Seguimiento</string>
+    <string name="title_share">Compartir película</string>
+    <string name="title_trending">Tendencia</string>
+    <string name="title_search">Búsqueda</string>
+    <string name="template_share">Vamos a ver %s, Movie DB lo califica con %.1f/10</string>
+    <string name="title_discover">Descubrir</string>
+</resources>

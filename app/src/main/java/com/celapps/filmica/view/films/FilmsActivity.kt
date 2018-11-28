@@ -8,18 +8,21 @@ import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.view.details.DetailsActivity
 import com.celapps.filmica.view.details.DetailsFragment
+import com.celapps.filmica.view.search.SearchFragment
 import com.celapps.filmica.view.trending.TrendingFragment
 import com.celapps.filmica.view.watchlist.WatchlistFragment
 import kotlinx.android.synthetic.main.activity_films.*
 
 const val TAG_FILMS = "films"
 const val TAG_WATCHLIST = "watchlist"
+const val TAG_SEARCH = "search"
 const val TAG_TRENDING = "trending"
 
 class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener {
 
     private lateinit var filmsFragment: FilmsFragment
     private lateinit var watchlistFragment: WatchlistFragment
+    private lateinit var searchFragment: SearchFragment
     private lateinit var trendingFragment: TrendingFragment
     private lateinit var activeFragment: Fragment
 
@@ -48,6 +51,7 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener {
             when (id) {
                 R.id.action_discover -> showMainFragment(filmsFragment)
                 R.id.action_watchlist -> showMainFragment(watchlistFragment)
+                R.id.action_search -> showMainFragment(searchFragment)
                 R.id.action_trending -> showMainFragment(trendingFragment)
             }
             true
@@ -64,13 +68,16 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener {
         // Creamos fragmentos
         filmsFragment = FilmsFragment()
         watchlistFragment = WatchlistFragment()
+        searchFragment = SearchFragment()
         trendingFragment = TrendingFragment()
 
         supportFragmentManager.beginTransaction()
             .add(R.id.container_list, filmsFragment, TAG_FILMS)
             .add(R.id.container_list, watchlistFragment, TAG_WATCHLIST)
+            .add(R.id.container_list, searchFragment, TAG_SEARCH)
             .add(R.id.container_list, trendingFragment, TAG_TRENDING)
             .hide(watchlistFragment)
+            .hide(searchFragment)
             .hide(trendingFragment)
             .commit()
 
@@ -80,22 +87,16 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener {
     private fun restoreFragments(tag: String) {
         filmsFragment = supportFragmentManager.findFragmentByTag(TAG_FILMS) as FilmsFragment
         watchlistFragment = supportFragmentManager.findFragmentByTag(TAG_WATCHLIST) as WatchlistFragment
+        searchFragment = supportFragmentManager.findFragmentByTag(TAG_SEARCH) as SearchFragment
         trendingFragment = supportFragmentManager.findFragmentByTag(TAG_TRENDING) as TrendingFragment
 
 
         when (tag) {
             TAG_WATCHLIST -> activeFragment = watchlistFragment
+            TAG_SEARCH -> activeFragment = searchFragment
             TAG_TRENDING -> activeFragment = trendingFragment
             else -> activeFragment = filmsFragment
         }
-
-//        activeFragment =
-//                if (tag == TAG_WATCHLIST)
-//                    watchlistFragment
-//                else if (tag == TAG_TRENDING)
-//                    trendingFragment
-//                else
-//                    filmsFragment
     }
 
     private fun showMainFragment(fragment: Fragment) {
