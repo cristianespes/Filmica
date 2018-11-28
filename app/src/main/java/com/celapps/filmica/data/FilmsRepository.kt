@@ -141,12 +141,12 @@ object FilmsRepository { // Todo estará en un contexto estático
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
-                films.addAll(
+                trendingFilms.addAll(
                     Film.parseFilms(
                         response
                     )
                 )
-                callbackSuccess.invoke(films)
+                callbackSuccess.invoke(trendingFilms)
             }, {error ->
                 callbackError.invoke(error)
             })

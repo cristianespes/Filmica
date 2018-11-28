@@ -15,10 +15,12 @@ open class BaseFilmAdapter<VH: BaseFilmHolder>(
 
     protected val list: MutableList<Film> = mutableListOf()
 
+    // 1 - Cuántos elementos se van a mostrar en la pantalla
     override fun getItemCount(): Int {
         return list.count()
     }
 
+    // 2 - Genera la vista de las filas => viewHolder (Plantilla)
     override fun onCreateViewHolder(recyclerView: ViewGroup, viewType: Int): VH {
         // Inflamos fichero desde xml
         val itemView = LayoutInflater.from(recyclerView.context)
@@ -28,6 +30,7 @@ open class BaseFilmAdapter<VH: BaseFilmHolder>(
         return holderCreator.invoke(itemView)// Instancia de una clase genérica
     }
 
+    // 3 - Acceso a los datos de la colección para setearlos en el elemento del ViewHolder
     override fun onBindViewHolder(viewHolder: VH, position: Int) {
         // Obtenemos la película según la posición que se solicite rellenar
         val film = list[position]
