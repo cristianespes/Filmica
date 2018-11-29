@@ -32,6 +32,18 @@ object ApiRoutes {
             .toString()
     }
 
+    // Método para hacer la petición de búsqueda de películas
+    fun searchUrl(query: String = "", page: Int = 1): String {
+
+        return getUriBuilder()
+            .appendPath("search")
+            .appendPath("company")
+            .appendQueryParameter("page", page.toString())
+            .appendQueryParameter("query", query)
+            .build()
+            .toString()
+    }
+
     private fun getUriBuilder() =
         Uri.Builder()
             .scheme("https")

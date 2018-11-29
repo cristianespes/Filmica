@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 object FilmsRepository { // Todo estará en un contexto estático
     private val films: MutableList<Film> = mutableListOf()
     private val trendingFilms: MutableList<Film> = mutableListOf()
+    private val searchFilms: MutableList<Film> = mutableListOf()
 
     @Volatile // Para que se pueda ejecuta en otro thread
     private var db: AppDatabase? = null
@@ -47,18 +48,19 @@ object FilmsRepository { // Todo estará en un contexto estático
 
 
     // Método para realizar la petición GET del discover a la API
-    fun discoverFilms(context: Context,
+    fun discoverFilms(page: Int,
+                      language: String,
+                      context: Context,
                       callbackSuccess: ((MutableList<Film>) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
 
         if (films.isEmpty()) {
-            requestDiscoverFilms(callbackSuccess, callbackError, context)
+            requestDiscoverFilms(page, language, callbackSuccess, callbackError, context)
         } else {
             callbackSuccess.invoke(films)
         }
     }
 
-    // TODO: ULTIMO MÉTODO INSERTADO, SEGUIR POR AQUÍ
     // Método para realizar la petición GET del Trending a la API
     fun trendingFilms(context: Context,
                       callbackSuccess: ((MutableList<Film>) -> Unit),
@@ -68,6 +70,19 @@ object FilmsRepository { // Todo estará en un contexto estático
             requestTrendingFilms(callbackSuccess, callbackError, context)
         } else {
             callbackSuccess.invoke(trendingFilms)
+        }
+    }
+
+    // Método para realizar la petición GET del Trending a la API
+    fun searchFilms(query: String,
+                    context: Context,
+                      callbackSuccess: ((MutableList<Film>) -> Unit),
+                      callbackError: ((VolleyError) -> Unit)) {
+
+        if (searchFilms.isEmpty()) {
+            requestSearchFilms(query ,callbackSuccess, callbackError, context)
+        } else {
+            callbackSuccess.invoke(searchFilms)
         }
     }
 
@@ -110,11 +125,13 @@ object FilmsRepository { // Todo estará en un contexto estático
     }
 
     private fun requestDiscoverFilms(
+        page: Int,
+        language: String,
         callbackSuccess: (MutableList<Film>) -> Unit,
         callbackError: (VolleyError) -> Unit,
         context: Context
     ) {
-        val url = ApiRoutes.discoverUrl()
+        val url = ApiRoutes.discoverUrl(page = page, language = language)
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
@@ -147,6 +164,30 @@ object FilmsRepository { // Todo estará en un contexto estático
                     )
                 )
                 callbackSuccess.invoke(trendingFilms)
+            }, {error ->
+                callbackError.invoke(error)
+            })
+
+        Volley.newRequestQueue(context)
+            .add(request)
+    }
+
+    private fun requestSearchFilms(
+        query: String,
+        callbackSuccess: (MutableList<Film>) -> Unit,
+        callbackError: (VolleyError) -> Unit,
+        context: Context
+    ) {
+        val url = ApiRoutes.searchUrl(query)
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            {response ->
+                searchFilms.addAll(
+                    Film.parseFilms(
+                        response
+                    )
+                )
+                callbackSuccess.invoke(searchFilms)
             }, {error ->
                 callbackError.invoke(error)
             })

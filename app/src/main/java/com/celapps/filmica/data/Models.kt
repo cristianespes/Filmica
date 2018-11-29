@@ -44,31 +44,17 @@ data class Film(
 
         // Método para parsear el objeto Json de la película y devolver un objeto película
         fun parseFilm(jsonFilm: JSONObject) : Film {
-
-            var title = ""
-            if (jsonFilm.has("title")) {
-                title = jsonFilm.getString("title")
-            } else {
-                title = jsonFilm.getString("name")
-            }
-
-            var date = ""
-            if (jsonFilm.has("release_date")) {
-                date = jsonFilm.getString("release_date")
-            } else {
-                date = "Undated"
-            }
-
             return Film(
                 id = jsonFilm.getInt("id").toString(),
                 // title es opcional
-                title = title,
-                overview = jsonFilm.getString("overview"),
-                voteRating = jsonFilm.getDouble("vote_average"),
+                title = jsonFilm.optString("title", jsonFilm.optString("name", "Unnamed")),
+                overview = jsonFilm.optString("overview", ""),
+                voteRating = jsonFilm.optDouble("vote_average", 5.0),
                 // release_date es opcional
-                release = date,
-                poster = jsonFilm.optString("poster_path", ""),
-                genre = parseGenres(jsonFilm.getJSONArray("genre_ids"))
+                release = jsonFilm.optString("release_date", "Undated"),
+                // poster es opcional
+                poster = jsonFilm.optString("poster_path", jsonFilm.optString("logo_path", "")),
+                genre = if (jsonFilm.length() > 3) parseGenres(jsonFilm.optJSONArray("genre_ids")) else ""
             )
         }
 

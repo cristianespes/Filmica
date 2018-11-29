@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_films.*
 import kotlinx.android.synthetic.main.layout_error.*
+import java.util.*
 
 class FilmsFragment: Fragment() {
 
@@ -61,16 +63,18 @@ class FilmsFragment: Fragment() {
         this.reload()
     }
 
-    fun reload() {
-        FilmsRepository.discoverFilms(context!!,
-            {films ->
+    fun reload(page: Int = 1) {
+        FilmsRepository.discoverFilms(page = page,
+            language = Locale.getDefault().language,
+            context = context!!,
+            callbackSuccess = {films ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
                 list.visibility = View.VISIBLE
                 adapter.setFilms(films)
             },
 
-            {error ->
+            callbackError = {error ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.VISIBLE
                 list.visibility = View.INVISIBLE
