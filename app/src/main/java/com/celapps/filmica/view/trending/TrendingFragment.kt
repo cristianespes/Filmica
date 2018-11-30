@@ -12,7 +12,6 @@ import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_trending.*
 import kotlinx.android.synthetic.main.layout_error.*
-import java.util.*
 
 class TrendingFragment: Fragment() {
 
