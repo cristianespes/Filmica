@@ -71,7 +71,7 @@ object FilmsRepository { // Todo estará en un contexto estático
         if (trendingFilms.isEmpty()) {
             requestTrendingFilms(callbackSuccess, callbackError, context)
         } else {
-            callbackSuccess.invoke(trendingFilms, totalPagesSearchFilms)
+            callbackSuccess.invoke(trendingFilms, totalPagesTrendingFilms)
         }
     }
 
@@ -169,7 +169,7 @@ object FilmsRepository { // Todo estará en un contexto estático
                     )
                 )
                 totalPagesTrendingFilms = response.optInt("total_pages", 0)
-                callbackSuccess.invoke(trendingFilms, totalPagesSearchFilms)
+                callbackSuccess.invoke(trendingFilms, totalPagesTrendingFilms)
             }, {error ->
                 callbackError.invoke(error)
             })
