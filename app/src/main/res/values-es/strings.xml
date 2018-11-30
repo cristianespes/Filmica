@@ -7,7 +7,7 @@
     <string name="label_overview">Reseña</string>
     <string name="error_request">Oppps, algo ha ido mal, por favor inténtalo de nuevo</string>
     <string name="label_retry">Reintentar</string>
-    <string name="title_watchlist">Seguimiento</string>
+    <string name="title_watchlist">Seguidas</string>
     <string name="title_share">Compartir película</string>
     <string name="title_trending">Tendencia</string>
     <string name="title_search">Búsqueda</string>

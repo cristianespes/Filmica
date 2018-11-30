@@ -54,7 +54,7 @@ data class Film(
                 release = jsonFilm.optString("release_date", "Undated"),
                 // poster es opcional
                 poster = jsonFilm.optString("poster_path", jsonFilm.optString("logo_path", "")),
-                genre = if (jsonFilm.length() > 3) parseGenres(jsonFilm.optJSONArray("genre_ids")) else ""
+                genre = if (jsonFilm.optJSONArray("genre_ids").length() > 0) parseGenres(jsonFilm.optJSONArray("genre_ids")) else ""
             )
         }
 

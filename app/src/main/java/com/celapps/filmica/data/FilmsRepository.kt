@@ -2,7 +2,6 @@ package com.celapps.filmica.data
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
@@ -15,8 +14,11 @@ import kotlinx.coroutines.launch
 // Singleton
 object FilmsRepository { // Todo estará en un contexto estático
     private val films: MutableList<Film> = mutableListOf()
+    private var totalPagesFilms: Int = 0
     private val trendingFilms: MutableList<Film> = mutableListOf()
+    private var totalPagesTrendingFilms: Int = 0
     private val searchFilms: MutableList<Film> = mutableListOf()
+    private var totalPagesSearchFilms: Int = 0
 
     @Volatile // Para que se pueda ejecuta en otro thread
     private var db: AppDatabase? = null
@@ -51,38 +53,40 @@ object FilmsRepository { // Todo estará en un contexto estático
     fun discoverFilms(page: Int,
                       language: String,
                       context: Context,
-                      callbackSuccess: ((MutableList<Film>) -> Unit),
+                      callbackSuccess: ((MutableList<Film>, Int) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
 
         if (films.isEmpty()) {
             requestDiscoverFilms(page, language, callbackSuccess, callbackError, context)
         } else {
-            callbackSuccess.invoke(films)
+            callbackSuccess.invoke(films, totalPagesFilms)
         }
     }
 
     // Método para realizar la petición GET del Trending a la API
     fun trendingFilms(context: Context,
-                      callbackSuccess: ((MutableList<Film>) -> Unit),
+                      callbackSuccess: ((MutableList<Film>, Int) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
 
         if (trendingFilms.isEmpty()) {
             requestTrendingFilms(callbackSuccess, callbackError, context)
         } else {
-            callbackSuccess.invoke(trendingFilms)
+            callbackSuccess.invoke(trendingFilms, totalPagesSearchFilms)
         }
     }
 
     // Método para realizar la petición GET del Trending a la API
     fun searchFilms(query: String,
+                    page: Int,
+                    language: String,
                     context: Context,
-                      callbackSuccess: ((MutableList<Film>) -> Unit),
+                      callbackSuccess: ((MutableList<Film>, Int) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
 
         if (searchFilms.isEmpty()) {
-            requestSearchFilms(query ,callbackSuccess, callbackError, context)
+            requestSearchFilms(query, page, language, callbackSuccess, callbackError, context)
         } else {
-            callbackSuccess.invoke(searchFilms)
+            callbackSuccess.invoke(searchFilms, totalPagesSearchFilms)
         }
     }
 
@@ -127,7 +131,7 @@ object FilmsRepository { // Todo estará en un contexto estático
     private fun requestDiscoverFilms(
         page: Int,
         language: String,
-        callbackSuccess: (MutableList<Film>) -> Unit,
+        callbackSuccess: (MutableList<Film>, Int) -> Unit,
         callbackError: (VolleyError) -> Unit,
         context: Context
     ) {
@@ -140,7 +144,8 @@ object FilmsRepository { // Todo estará en un contexto estático
                         response
                     )
                 )
-                callbackSuccess.invoke(films)
+                totalPagesFilms = response.optInt("total_pages", 0)
+                callbackSuccess.invoke(films, totalPagesFilms)
             }, {error ->
                 callbackError.invoke(error)
             })
@@ -150,7 +155,7 @@ object FilmsRepository { // Todo estará en un contexto estático
     }
 
     private fun requestTrendingFilms(
-        callbackSuccess: (MutableList<Film>) -> Unit,
+        callbackSuccess: (MutableList<Film>, Int) -> Unit,
         callbackError: (VolleyError) -> Unit,
         context: Context
     ) {
@@ -163,7 +168,8 @@ object FilmsRepository { // Todo estará en un contexto estático
                         response
                     )
                 )
-                callbackSuccess.invoke(trendingFilms)
+                totalPagesTrendingFilms = response.optInt("total_pages", 0)
+                callbackSuccess.invoke(trendingFilms, totalPagesSearchFilms)
             }, {error ->
                 callbackError.invoke(error)
             })
@@ -174,11 +180,13 @@ object FilmsRepository { // Todo estará en un contexto estático
 
     private fun requestSearchFilms(
         query: String,
-        callbackSuccess: (MutableList<Film>) -> Unit,
+        page: Int,
+        language: String,
+        callbackSuccess: (MutableList<Film>, Int) -> Unit,
         callbackError: (VolleyError) -> Unit,
         context: Context
     ) {
-        val url = ApiRoutes.searchUrl(query)
+        val url = ApiRoutes.searchUrl(query, language,  page)
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
@@ -187,7 +195,8 @@ object FilmsRepository { // Todo estará en un contexto estático
                         response
                     )
                 )
-                callbackSuccess.invoke(searchFilms)
+                totalPagesSearchFilms = response.optInt("total_pages", 0)
+                callbackSuccess.invoke(searchFilms, totalPagesSearchFilms)
             }, {error ->
                 callbackError.invoke(error)
             })

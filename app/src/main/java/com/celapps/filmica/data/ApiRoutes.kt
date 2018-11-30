@@ -33,13 +33,18 @@ object ApiRoutes {
     }
 
     // Método para hacer la petición de búsqueda de películas
-    fun searchUrl(query: String = "", page: Int = 1): String {
+    fun searchUrl(query: String = "",
+                  language: String = "en-US",
+                  page: Int = 1): String {
 
         return getUriBuilder()
             .appendPath("search")
-            .appendPath("company")
-            .appendQueryParameter("page", page.toString())
+            .appendPath("movie")
+            .appendQueryParameter("language", language)
             .appendQueryParameter("query", query)
+            .appendQueryParameter("include_adult", "false")
+            .appendQueryParameter("include_video", "false")
+            .appendQueryParameter("page", page.toString())
             .build()
             .toString()
     }

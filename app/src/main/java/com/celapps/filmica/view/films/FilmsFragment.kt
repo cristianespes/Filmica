@@ -67,7 +67,7 @@ class FilmsFragment: Fragment() {
         FilmsRepository.discoverFilms(page = page,
             language = Locale.getDefault().language,
             context = context!!,
-            callbackSuccess = {films ->
+            callbackSuccess = {films, total_pages ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
                 list.visibility = View.VISIBLE
