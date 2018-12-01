@@ -11,6 +11,11 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
 
         if (savedInstanceState == null) {
+
+            // ActionBar
+            val actionBar = supportActionBar!!
+            actionBar.setDisplayHomeAsUpEnabled(true) // Back Button
+
             val id = intent.getStringExtra("id")
 
             val detailsFragment =
@@ -20,5 +25,11 @@ class DetailsActivity : AppCompatActivity() {
                 .add(R.id.container_details, detailsFragment)
                 .commit()
         }
+    }
+
+    // Back View
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
