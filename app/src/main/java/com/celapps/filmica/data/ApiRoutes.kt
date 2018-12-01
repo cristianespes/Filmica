@@ -26,7 +26,7 @@ object ApiRoutes {
 
         return getUriBuilder()
             .appendPath("trending")
-            .appendPath("all")
+            .appendPath("movie")
             .appendPath("day")
             .build()
             .toString()
