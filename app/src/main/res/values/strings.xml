@@ -13,4 +13,5 @@
     <string name="template_share">Let\'s watch %s, Movie DB rates it with %.1f/10</string>
     <string name="title_trending">Trending</string>
     <string name="title_search">Search</string>
+    <string name="added_to_list">Added to list</string>
 </resources>

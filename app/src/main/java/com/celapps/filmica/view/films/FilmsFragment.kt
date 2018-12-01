@@ -41,7 +41,6 @@ class FilmsFragment: Fragment() {
         if (context is OnItemClickListener) {
             listener = context
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

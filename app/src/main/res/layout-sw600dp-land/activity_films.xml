@@ -32,6 +32,7 @@
         app:itemIconTint="@android:color/white"
         app:itemTextAppearanceActive="@style/Title.White"
         app:itemTextColor="@android:color/white"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation">
 
     </android.support.design.widget.BottomNavigationView>

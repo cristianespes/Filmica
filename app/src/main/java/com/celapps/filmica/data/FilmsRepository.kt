@@ -13,10 +13,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 // Singleton
-object FilmsRepository { // Todo estará en un contexto estático
+object FilmsRepository { // Todo está en un contexto estático
     private val films: MutableList<Film> = mutableListOf()
     private var totalPagesFilms: Int = 0
-    private var watchlistFilms: List<Film> = listOf()
+    private var watchlistFilms: MutableList<Film> = mutableListOf()
     private val trendingFilms: MutableList<Film> = mutableListOf()
     private var totalPagesTrendingFilms: Int = 0
     private val searchFilms: MutableList<Film> = mutableListOf()
@@ -102,7 +102,6 @@ object FilmsRepository { // Todo estará en un contexto estático
     }
 
     fun saveFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)) {
-
         GlobalScope.launch(Dispatchers.Main) {
             val async = async(Dispatchers.IO) {
                 val db = getDbInstance(context)
@@ -112,8 +111,6 @@ object FilmsRepository { // Todo estará en un contexto estático
             async.await()
             callbackSuccess.invoke(film)
         }
-
-
     }
 
     fun watchlist(context: Context, callbackSuccess: ((List<Film>) -> Unit)) {
@@ -124,7 +121,7 @@ object FilmsRepository { // Todo estará en un contexto estático
             }
 
             val films: List<Film> = async.await()
-            watchlistFilms = films
+            watchlistFilms = films.toMutableList()
             callbackSuccess.invoke(films)
         }
     }

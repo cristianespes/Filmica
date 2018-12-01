@@ -1,5 +1,6 @@
 package com.celapps.filmica.view.details
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -14,11 +15,14 @@ import android.widget.Toast
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
+import com.celapps.filmica.view.films.FilmsActivity
 import com.celapps.filmica.view.util.SimpleTarget
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment: Fragment() {
+
+    lateinit var listener: OnItemClickListener
 
     // Método estático dentro de la clase
     companion object {
@@ -30,6 +34,13 @@ class DetailsFragment: Fragment() {
             instance.arguments = args
 
             return instance
+        }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnItemClickListener) {
+            listener = context // Inicializar el listener
         }
     }
 
@@ -73,9 +84,20 @@ class DetailsFragment: Fragment() {
         btnAdd.setOnClickListener {
             film?.let {
                 FilmsRepository.saveFilm(context!!, it) {
-                    Toast.makeText(context, "Added to list", Toast.LENGTH_SHORT).show()
+                    FilmsRepository
+                    Toast.makeText(context, getString(R.string.added_to_list), Toast.LENGTH_SHORT).show()
+                    if (context is FilmsActivity) {
+                        this.listener.onButtonClicked(it) // Solo en tablets
+                    }
                 }
             }
+        }
+
+        when(tag) {
+            FilmsRepository.TAG_FILMS -> btnAdd.show()
+            FilmsRepository.TAG_WATCHLIST -> btnAdd.hide()
+            FilmsRepository.TAG_SEARCH -> btnAdd.show()
+            FilmsRepository.TAG_TRENDING -> btnAdd.show()
         }
     }
 
@@ -142,5 +164,9 @@ class DetailsFragment: Fragment() {
             // Los colores en Appcompat en los botones funciona con tint
             btnAdd.backgroundTintList = ColorStateList.valueOf(color) // Color en el botón flotante
         }
+    }
+
+    interface OnItemClickListener {
+        fun onButtonClicked(film: Film)
     }
 }

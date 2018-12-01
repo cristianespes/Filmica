@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.view.details.DetailsActivity
@@ -18,7 +19,7 @@ const val TAG_WATCHLIST = "watchlist"
 const val TAG_SEARCH = "search"
 const val TAG_TRENDING = "trending"
 
-class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, WatchlistFragment.OnItemClickListener, TrendingFragment.OnItemClickListener, SearchFragment.OnItemClickListener {
+class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, WatchlistFragment.OnItemClickListener, TrendingFragment.OnItemClickListener, SearchFragment.OnItemClickListener, DetailsFragment.OnItemClickListener {
 
     private lateinit var filmsFragment: FilmsFragment
     private lateinit var watchlistFragment: WatchlistFragment
@@ -28,6 +29,10 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
 
     override fun onItemClicked(film: Film) {
         this.showDetails(film.id, activeFragment.tag ?: TAG_FILMS)
+    }
+
+    override fun onButtonClicked(film: Film) {
+        watchlistFragment.addFilm(film)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,7 +120,7 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
             launchDetailsActivity(id, tag)
     }
 
-    private fun isTablet() = this.containerDetails != null
+    fun isTablet() = this.containerDetails != null
 
 
     private fun showDetailsFragment(id: String, tag: String) {

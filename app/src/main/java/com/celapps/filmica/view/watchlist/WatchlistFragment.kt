@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import kotlinx.android.synthetic.main.fragment_watchlist.*
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
+import com.celapps.filmica.view.details.DetailsFragment
 import com.celapps.filmica.view.util.SwipeToDeleteCallback
+import kotlinx.android.synthetic.main.activity_films.*
 
 class WatchlistFragment : Fragment() {
 
@@ -75,6 +78,12 @@ class WatchlistFragment : Fragment() {
         var film = adapter.getFilm(position)
         FilmsRepository.deleteFilm(context!!, film) {
             adapter.removeFilmAt(position)
+        }
+    }
+
+    fun addFilm(film: Film) {
+        FilmsRepository.watchlist(context!!) { films ->
+            adapter.setFilms(films.toMutableList())
         }
     }
 
