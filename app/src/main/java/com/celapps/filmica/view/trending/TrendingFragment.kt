@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.celapps.filmica.R
+import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_trending.*
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.layout_error.*
 
 class TrendingFragment: Fragment() {
 
-//    lateinit var listener: OnItemClickListener
+    lateinit var listener: OnItemClickListener
 
     val list: RecyclerView by lazy {
         val instance = view!!.findViewById<RecyclerView>(R.id.list_films) // la vista que estamos retornando en el onCreateView
@@ -25,25 +26,25 @@ class TrendingFragment: Fragment() {
         instance // retorna la instancia
     }
 
-//    val adapter: TrendingAdapter by lazy {
-//        val instance = TrendingAdapter { film ->
-//            this.listener.onItemClicked(film)
-//        }
-//
-//        instance
-//    }
-
     val adapter: TrendingAdapter by lazy {
-        val instance = TrendingAdapter()
+        val instance = TrendingAdapter { film ->
+            this.listener.onItemClicked(film)
+        }
+
         instance
     }
+
+//    val adapter: TrendingAdapter by lazy {
+//        val instance = TrendingAdapter()
+//        instance
+//    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-//        if (context is OnItemClickListener) {
-//            listener = context
-//        }
+        if (context is OnItemClickListener) {
+            listener = context
+        }
 
     }
 
@@ -83,8 +84,8 @@ class TrendingFragment: Fragment() {
             })
     }
 
-//    interface OnItemClickListener {
-//        fun onItemClicked(film: Film)
-//    }
+    interface OnItemClickListener {
+        fun onItemClicked(film: Film)
+    }
 
 }

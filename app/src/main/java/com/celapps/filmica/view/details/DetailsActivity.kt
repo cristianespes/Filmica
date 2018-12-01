@@ -17,9 +17,10 @@ class DetailsActivity : AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true) // Back Button
 
             val id = intent.getStringExtra("id")
+            val tag = intent.getStringExtra("tag")
 
             val detailsFragment =
-                DetailsFragment.newInstance(id) // Creamos fragmento
+                DetailsFragment.newInstance(id, tag) // Creamos fragmento
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.container_details, detailsFragment)

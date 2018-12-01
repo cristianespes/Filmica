@@ -27,7 +27,7 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener {
     private lateinit var activeFragment: Fragment
 
     override fun onItemClicked(film: Film) {
-        this.showDetails(film.id)
+        this.showDetails(film.id, activeFragment.tag ?: TAG_FILMS)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,27 +108,28 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener {
         activeFragment = fragment
     }
 
-    fun showDetails(id: String) {
+    fun showDetails(id: String, tag: String) {
         if (isTablet())
-            showDetailsFragment(id)
+            showDetailsFragment(id, tag)
         else
-            launchDetailsActivity(id)
+            launchDetailsActivity(id, tag)
     }
 
     private fun isTablet() = this.containerDetails != null
 
 
-    private fun showDetailsFragment(id: String) {
-        val detailsFragment = DetailsFragment.newInstance(id)
+    private fun showDetailsFragment(id: String, tag: String) {
+        val detailsFragment = DetailsFragment.newInstance(id, tag)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.containerDetails, detailsFragment)
             .commit()
     }
 
-    private fun launchDetailsActivity(id: String) {
+    private fun launchDetailsActivity(id: String, tag: String) {
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra("id", id)
+        intent.putExtra("tag", tag)
         startActivity(intent)
     }
 

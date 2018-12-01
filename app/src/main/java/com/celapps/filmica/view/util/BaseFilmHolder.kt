@@ -1,6 +1,7 @@
 package com.celapps.filmica.view.util
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import com.celapps.filmica.data.Film
 
@@ -11,6 +12,7 @@ open class BaseFilmHolder(itemView: View,
 
     init {
         itemView.setOnClickListener {
+            Log.d("Patata", "Item cliqueado")
             clickListener?.invoke(film)
         }
     }

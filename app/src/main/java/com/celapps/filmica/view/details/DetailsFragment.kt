@@ -16,16 +16,16 @@ import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.SimpleTarget
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
-import kotlinx.android.synthetic.main.item_film.view.*
 
 class DetailsFragment: Fragment() {
 
     // Método estático dentro de la clase
     companion object {
-        fun newInstance(id: String) : DetailsFragment {
+        fun newInstance(id: String, tag: String) : DetailsFragment {
             val instance = DetailsFragment()
             val args = Bundle()
             args.putString("id", id)
+            args.putString("tag", tag)
             instance.arguments = args
 
             return instance
@@ -53,7 +53,9 @@ class DetailsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val id: String = arguments?.getString("id") ?: ""
-        film = FilmsRepository.findFilmById(id)
+        val tag: String = arguments?.getString("tag") ?: ""
+
+        film = FilmsRepository.findFilmById(id, tag)
 
         film?.let {
             with(it) {

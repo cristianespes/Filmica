@@ -20,6 +20,11 @@ object FilmsRepository { // Todo estará en un contexto estático
     private val searchFilms: MutableList<Film> = mutableListOf()
     private var totalPagesSearchFilms: Int = 0
 
+    const val TAG_FILMS = "films"
+    const val TAG_WATCHLIST = "watchlist"
+    const val TAG_SEARCH = "search"
+    const val TAG_TRENDING = "trending"
+
     @Volatile // Para que se pueda ejecuta en otro thread
     private var db: AppDatabase? = null
     //databaseBuilder solo debe ser ejecutado una vez, sino generará problemas
@@ -32,8 +37,15 @@ object FilmsRepository { // Todo estará en un contexto estático
         return db as AppDatabase
     }
 
-    fun findFilmById(id: String): Film? {
-        return films.find { film -> film.id == id }
+    fun findFilmById(id: String, tag: String): Film? {
+        when(tag) {
+            TAG_FILMS -> return films.find { film -> film.id == id }
+            //TAG_WATCHLIST -> films.find { film -> film.id == id }
+            TAG_SEARCH -> searchFilms.find { film -> film.id == id }
+            TAG_TRENDING ->  trendingFilms.find { film -> film.id == id }
+        }
+
+        return null
     }
 
     private fun dummyFilms(): List<Film> {
