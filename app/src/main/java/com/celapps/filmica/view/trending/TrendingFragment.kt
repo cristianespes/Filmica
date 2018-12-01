@@ -35,11 +35,6 @@ class TrendingFragment: Fragment() {
         instance
     }
 
-//    val adapter: TrendingAdapter by lazy {
-//        val instance = TrendingAdapter()
-//        instance
-//    }
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 

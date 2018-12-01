@@ -1,27 +1,41 @@
 package com.celapps.filmica.view.search
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import com.celapps.filmica.R
+import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_error.*
 import java.util.*
 
 class SearchFragment: Fragment() {
-    //    lateinit var listener: OnItemClickListener
+
+    lateinit var listener: OnItemClickListener
 
     val adapter: SearchAdapter by lazy {
-        val instance = SearchAdapter()
+        val instance = SearchAdapter { film ->
+            this.listener.onItemClicked(film)
+        }
+
         instance
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true) // Para indicar que en el ciclo de vida de este fragmento, va a ejecutar un callback con un menú
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if (context is OnItemClickListener) {
+            listener = context
+        }
     }
 
     override fun onCreateView(
@@ -96,6 +110,10 @@ class SearchFragment: Fragment() {
 
                 error.printStackTrace()
             })
+    }
+
+    interface OnItemClickListener {
+        fun onItemClicked(film: Film)
     }
 
 }
