@@ -83,11 +83,8 @@ object FilmsRepository { // Todo estará en un contexto estático
                       callbackSuccess: ((MutableList<Film>, Int) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
 
-        if (searchFilms.isEmpty()) {
-            requestSearchFilms(query, page, language, callbackSuccess, callbackError, context)
-        } else {
-            callbackSuccess.invoke(searchFilms, totalPagesSearchFilms)
-        }
+        searchFilms.removeAll { true }
+        requestSearchFilms(query, page, language, callbackSuccess, callbackError, context)
     }
 
     fun saveFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)) {

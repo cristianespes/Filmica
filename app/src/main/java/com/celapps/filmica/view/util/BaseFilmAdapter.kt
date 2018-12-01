@@ -54,5 +54,4 @@ open class BaseFilmAdapter<VH: BaseFilmHolder>(
         list.removeAt(position)
         notifyItemRemoved(position)
     }
-
 }

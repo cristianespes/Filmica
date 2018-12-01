@@ -2,9 +2,9 @@ package com.celapps.filmica.view.search
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.util.Log
+import android.view.*
 import com.celapps.filmica.R
 import com.celapps.filmica.data.FilmsRepository
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -12,12 +12,16 @@ import kotlinx.android.synthetic.main.layout_error.*
 import java.util.*
 
 class SearchFragment: Fragment() {
-
     //    lateinit var listener: OnItemClickListener
 
     val adapter: SearchAdapter by lazy {
         val instance = SearchAdapter()
         instance
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true) // Para indicar que en el ciclo de vida de este fragmento, va a ejecutar un callback con un menú
     }
 
     override fun onCreateView(
@@ -26,6 +30,36 @@ class SearchFragment: Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val searchItem = menu.findItem(R.id.action_search_toolbar)
+        //Log.d("Patata", "Se obtiene searchItem")
+        if (searchItem != null) {
+            //Log.d("Patata", "Se comprueba que searchItem no es nulo")
+            val searchView = searchItem.actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText == null || newText.trim().isEmpty() || (newText.length < 3)) {
+                        if (newText?.length == 0) reload() else return false
+                        return false
+                    }
+
+                    reload(query = newText.toLowerCase())
+                    return true
+                }
+
+            })
+        }
+//        searchView.queryHint = "PATATA"
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,9 +75,9 @@ class SearchFragment: Fragment() {
         this.reload()
     }
 
-    fun reload(page: Int = 1) {
+    fun reload(query: String = "a", page: Int = 1) {
         FilmsRepository.searchFilms(
-            query = "ven",
+            query = query,
             page = page,
             language = Locale.getDefault().language,
             context = context!!,
@@ -52,7 +86,7 @@ class SearchFragment: Fragment() {
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
                 searchfilmslist.visibility = View.VISIBLE
-                adapter.setFilms(films)
+                adapter.setFilms(films) //films.sortedWith(compareBy { it.title }).toMutableList()
             },
 
             callbackError = {error ->

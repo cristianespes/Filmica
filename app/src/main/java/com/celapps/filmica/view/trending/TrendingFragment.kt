@@ -81,27 +81,6 @@ class TrendingFragment: Fragment() {
 
                 error.printStackTrace()
             })
-
-        /*FilmsRepository.searchFilms(
-            query = "ven",
-            page = 1,
-            language = Locale.getDefault().language,
-            context = context!!,
-
-            callbackSuccess = {films, total_pages ->
-                progress.visibility = View.INVISIBLE
-                layoutError.visibility = View.INVISIBLE
-                list.visibility = View.VISIBLE
-                adapter.setFilms(films)
-            },
-
-            callbackError = {error ->
-                progress.visibility = View.INVISIBLE
-                layoutError.visibility = View.VISIBLE
-                list.visibility = View.INVISIBLE
-
-                error.printStackTrace()
-            })*/
     }
 
 //    interface OnItemClickListener {

@@ -69,11 +69,8 @@ class SearchAdapter: BaseFilmAdapter<SearchAdapter.SearchHolder>(
 
                 itemView.imgOverlay.setBackgroundColor(overlayColor)
             }
-
-
         }
 
     }
-
 
 }
