@@ -2,6 +2,7 @@ package com.celapps.filmica.data
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
@@ -40,9 +41,9 @@ object FilmsRepository { // Todo estará en un contexto estático
     fun findFilmById(id: String, tag: String): Film? {
         when(tag) {
             TAG_FILMS -> return films.find { film -> film.id == id }
-            //TAG_WATCHLIST -> films.find { film -> film.id == id }
-            TAG_SEARCH -> searchFilms.find { film -> film.id == id }
-            TAG_TRENDING ->  trendingFilms.find { film -> film.id == id }
+            TAG_WATCHLIST -> return films.find { film -> film.id == id }
+            TAG_SEARCH -> return searchFilms.find { film -> film.id == id }
+            TAG_TRENDING ->  return trendingFilms.find { film -> film.id == id }
         }
 
         return null

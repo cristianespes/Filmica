@@ -12,7 +12,6 @@ open class BaseFilmHolder(itemView: View,
 
     init {
         itemView.setOnClickListener {
-            Log.d("Patata", "Item cliqueado")
             clickListener?.invoke(film)
         }
     }

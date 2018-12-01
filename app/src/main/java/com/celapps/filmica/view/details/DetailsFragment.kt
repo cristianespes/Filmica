@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.graphics.Palette
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import com.celapps.filmica.R
