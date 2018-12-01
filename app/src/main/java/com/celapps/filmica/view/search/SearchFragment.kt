@@ -28,6 +28,8 @@ class SearchFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true) // Para indicar que en el ciclo de vida de este fragmento, va a ejecutar un callback con un menú
+
+        this.reload()
     }
 
     override fun onAttach(context: Context?) {
@@ -50,9 +52,9 @@ class SearchFragment: Fragment() {
         inflater.inflate(R.menu.menu_search, menu)
 
         val searchItem = menu.findItem(R.id.action_search_toolbar)
-        //Log.d("Patata", "Se obtiene searchItem")
+
         if (searchItem != null) {
-            //Log.d("Patata", "Se comprueba que searchItem no es nulo")
+
             val searchView = searchItem.actionView as SearchView
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -83,12 +85,6 @@ class SearchFragment: Fragment() {
         btnRetry.setOnClickListener { this.reload() }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        this.reload()
-    }
-
     fun reload(query: String = "a", page: Int = 1) {
         FilmsRepository.searchFilms(
             query = query,
@@ -115,5 +111,4 @@ class SearchFragment: Fragment() {
     interface OnItemClickListener {
         fun onItemClicked(film: Film)
     }
-
 }

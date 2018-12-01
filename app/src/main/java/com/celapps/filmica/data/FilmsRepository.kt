@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 object FilmsRepository { // Todo estará en un contexto estático
     private val films: MutableList<Film> = mutableListOf()
     private var totalPagesFilms: Int = 0
+    private var watchlistFilms: List<Film> = listOf()
     private val trendingFilms: MutableList<Film> = mutableListOf()
     private var totalPagesTrendingFilms: Int = 0
     private val searchFilms: MutableList<Film> = mutableListOf()
@@ -41,7 +42,7 @@ object FilmsRepository { // Todo estará en un contexto estático
     fun findFilmById(id: String, tag: String): Film? {
         when(tag) {
             TAG_FILMS -> return films.find { film -> film.id == id }
-            TAG_WATCHLIST -> return films.find { film -> film.id == id }
+            TAG_WATCHLIST -> return watchlistFilms.find { film -> film.id == id }
             TAG_SEARCH -> return searchFilms.find { film -> film.id == id }
             TAG_TRENDING ->  return trendingFilms.find { film -> film.id == id }
         }
@@ -123,6 +124,7 @@ object FilmsRepository { // Todo estará en un contexto estático
             }
 
             val films: List<Film> = async.await()
+            watchlistFilms = films
             callbackSuccess.invoke(films)
         }
     }
