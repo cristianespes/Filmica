@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 // Singleton
 object FilmsRepository { // Todo está en un contexto estático
@@ -199,11 +200,17 @@ object FilmsRepository { // Todo está en un contexto estático
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
-                searchFilms.addAll(
-                    Film.parseFilms(
-                        response
-                    ).subList(0, 10)
-                )
+//                val auxSearchFilms: MutableList<Film> = mutableListOf()
+//                auxSearchFilms.addAll(
+//                    Film.parseFilms(
+//                        response
+//                    )
+//                )
+//                auxSearchFilms.forEach {
+//                    if (searchFilms.size < 10) searchFilms.add(it)
+//                }
+                val auxList = Film.parseFilms( response )
+                searchFilms.addAll( auxList.subList(0, min(10, auxList.size )) )
                 totalPagesSearchFilms = response.optInt("total_pages", 0)
                 callbackSuccess.invoke(searchFilms, totalPagesSearchFilms)
             }, {error ->
