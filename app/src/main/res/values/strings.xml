@@ -18,4 +18,5 @@
     <string name="stored_movie">1 stored movie</string>
     <string name="undo">Undo</string>
     <string name="deleted_movie">1 deleted movie</string>
+    <string name="empty_detail">You can view any movie here</string>
 </resources>

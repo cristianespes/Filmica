@@ -9,6 +9,7 @@ import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.view.details.DetailsActivity
 import com.celapps.filmica.view.details.DetailsFragment
+import com.celapps.filmica.view.placeholder.PlaceholderFragment
 import com.celapps.filmica.view.search.SearchFragment
 import com.celapps.filmica.view.trending.TrendingFragment
 import com.celapps.filmica.view.watchlist.WatchlistFragment
@@ -48,7 +49,6 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
             restoreFragments(activeTag)
         }
 
-
         // Evento para la barra inferior del menú de navegación
         navigation?.setOnNavigationItemSelectedListener { item ->
             val id = item.itemId
@@ -87,6 +87,8 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
             .commit()
 
         activeFragment = filmsFragment
+
+        if (isTablet()) showPlaceholderFragment()
     }
 
     private fun restoreFragments(tag: String) {
@@ -120,7 +122,15 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
             launchDetailsActivity(id, tag)
     }
 
-    fun isTablet() = this.containerDetails != null
+    private fun isTablet() = this.containerDetails != null
+
+    private fun showPlaceholderFragment() {
+        val placeholder = PlaceholderFragment.newInstance()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.containerDetails, placeholder)
+            .commit()
+    }
 
 
     private fun showDetailsFragment(id: String, tag: String) {
