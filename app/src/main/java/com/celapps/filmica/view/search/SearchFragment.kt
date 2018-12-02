@@ -64,10 +64,16 @@ class SearchFragment: Fragment() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText == null || newText.trim().isEmpty() || (newText.length < 3)) {
-                        if (newText?.length == 0) reload() else return false
+                        if (newText?.length == 0) {
+                            progress.visibility = View.VISIBLE
+                            reload()
+                            return true
+                        }
+
                         return false
                     }
 
+                    progress.visibility = View.VISIBLE
                     reload(query = newText.toLowerCase())
                     return true
                 }
