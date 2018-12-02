@@ -15,6 +15,7 @@
     <string name="title_discover">Descubrir</string>
     <string name="added_to_list">Añadida a la lista</string>
     <string name="search_not_found">No se han encontrado películas para esta búsqueda</string>
-    <string name="stored_movie">Película guardada</string>
+    <string name="stored_movie">1 película guardada</string>
     <string name="undo">Deshacer</string>
+    <string name="deleted_movie">1 película eliminada</string>
 </resources>

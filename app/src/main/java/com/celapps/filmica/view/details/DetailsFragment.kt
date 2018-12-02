@@ -100,7 +100,7 @@ class DetailsFragment: Fragment() {
                                 }
                             }
                         }
-                        .setActionTextColor(ContextCompat.getColor(context!!, android.R.color.holo_red_light))
+                        .setActionTextColor(ContextCompat.getColor(context!!, R.color.colorSnackbarAction))
                         .show()
                 }
             }

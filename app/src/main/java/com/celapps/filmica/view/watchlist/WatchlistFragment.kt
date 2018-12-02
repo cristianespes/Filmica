@@ -3,7 +3,9 @@ package com.celapps.filmica.view.watchlist
 
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
@@ -15,9 +17,7 @@ import kotlinx.android.synthetic.main.fragment_watchlist.*
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
-import com.celapps.filmica.view.details.DetailsFragment
 import com.celapps.filmica.view.util.SwipeToDeleteCallback
-import kotlinx.android.synthetic.main.activity_films.*
 
 class WatchlistFragment : Fragment() {
 
@@ -78,6 +78,15 @@ class WatchlistFragment : Fragment() {
         var film = adapter.getFilm(position)
         FilmsRepository.deleteFilm(context!!, film) {
             adapter.removeFilmAt(position)
+
+            Snackbar
+                .make( watchlist, getString(R.string.deleted_movie), Snackbar.LENGTH_LONG )
+                .setAction(getString(R.string.undo)) {
+                    FilmsRepository.saveFilm(context!!, film) {}
+                    adapter.addFilm(film)
+                }
+                .setActionTextColor(ContextCompat.getColor(context!!, R.color.colorSnackbarAction))
+                .show()
         }
     }
 
