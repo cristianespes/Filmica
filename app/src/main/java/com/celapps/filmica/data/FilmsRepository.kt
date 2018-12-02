@@ -202,7 +202,7 @@ object FilmsRepository { // Todo está en un contexto estático
                 searchFilms.addAll(
                     Film.parseFilms(
                         response
-                    )
+                    ).subList(0, 10)
                 )
                 totalPagesSearchFilms = response.optInt("total_pages", 0)
                 callbackSuccess.invoke(searchFilms, totalPagesSearchFilms)
