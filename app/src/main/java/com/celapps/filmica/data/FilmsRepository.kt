@@ -102,7 +102,7 @@ object FilmsRepository { // Todo está en un contexto estático
         requestSearchFilms(query, page, language, callbackSuccess, callbackError, context)
     }
 
-    fun saveFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)) {
+    fun saveFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)? = null) {
         GlobalScope.launch(Dispatchers.Main) {
             val async = async(Dispatchers.IO) {
                 val db = getDbInstance(context)
@@ -110,7 +110,7 @@ object FilmsRepository { // Todo está en un contexto estático
             }
 
             async.await()
-            callbackSuccess.invoke(film)
+            callbackSuccess?.invoke(film)
         }
     }
 

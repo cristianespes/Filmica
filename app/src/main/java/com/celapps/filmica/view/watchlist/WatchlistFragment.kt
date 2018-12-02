@@ -82,7 +82,7 @@ class WatchlistFragment : Fragment() {
             Snackbar
                 .make( watchlist, getString(R.string.deleted_movie), Snackbar.LENGTH_LONG )
                 .setAction(getString(R.string.undo)) {
-                    FilmsRepository.saveFilm(context!!, film) {}
+                    FilmsRepository.saveFilm(context!!, film)
                     adapter.addFilm(film)
                 }
                 .setActionTextColor(ContextCompat.getColor(context!!, R.color.colorSnackbarAction))
