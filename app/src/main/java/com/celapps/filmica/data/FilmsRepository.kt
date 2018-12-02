@@ -127,14 +127,14 @@ object FilmsRepository { // Todo está en un contexto estático
         }
     }
 
-    fun deleteFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)) {
+    fun deleteFilm(context: Context, film: Film, callbackSuccess: ((Film) -> Unit)? = null) {
         GlobalScope.launch(Dispatchers.Main) {
             val async = async(Dispatchers.IO) {
                 val db = getDbInstance(context)
                 db.filmDao().deleteFilm(film)
             }
             async.await()
-            callbackSuccess.invoke(film)
+            callbackSuccess?.invoke(film)
         }
     }
 
