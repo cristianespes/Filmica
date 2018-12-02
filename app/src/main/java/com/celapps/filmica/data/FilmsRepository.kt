@@ -200,15 +200,6 @@ object FilmsRepository { // Todo está en un contexto estático
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
-//                val auxSearchFilms: MutableList<Film> = mutableListOf()
-//                auxSearchFilms.addAll(
-//                    Film.parseFilms(
-//                        response
-//                    )
-//                )
-//                auxSearchFilms.forEach {
-//                    if (searchFilms.size < 10) searchFilms.add(it)
-//                }
                 val auxList = Film.parseFilms( response )
                 searchFilms.addAll( auxList.subList(0, min(10, auxList.size )) )
                 totalPagesSearchFilms = response.optInt("total_pages", 0)

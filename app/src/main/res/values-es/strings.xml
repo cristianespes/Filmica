@@ -14,4 +14,5 @@
     <string name="template_share">Vamos a ver %s, Movie DB lo califica con %.1f/10</string>
     <string name="title_discover">Descubrir</string>
     <string name="added_to_list">Añadida a la lista</string>
+    <string name="search_not_found">No se han encontrado películas para esta búsqueda</string>
 </resources>

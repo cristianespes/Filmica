@@ -14,4 +14,5 @@
     <string name="title_trending">Trending</string>
     <string name="title_search">Search</string>
     <string name="added_to_list">Added to list</string>
+    <string name="search_not_found">No movies found for this search</string>
 </resources>
