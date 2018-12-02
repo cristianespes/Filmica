@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.view.details.DetailsActivity

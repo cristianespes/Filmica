@@ -22,5 +22,4 @@ class PlaceholderFragment: Fragment() {
         return inflater.inflate(R.layout.layout_placeholder, container, false)
     }
 
-
 }
