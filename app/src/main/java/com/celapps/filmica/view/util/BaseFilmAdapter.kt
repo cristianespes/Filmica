@@ -46,6 +46,11 @@ open class BaseFilmAdapter<VH: BaseFilmHolder>(
         notifyDataSetChanged()
     }
 
+    fun updateFilms(films: MutableList<Film>) {
+        list.addAll(films)
+        notifyItemRangeInserted(list.size, films.size)
+    }
+
     fun getFilm(position: Int) : Film {
         return list.get(position)
     }
@@ -56,7 +61,7 @@ open class BaseFilmAdapter<VH: BaseFilmHolder>(
     }
 
     fun addFilm(film: Film, position: Int? = null) {
-        if (position == null) list.add(film) else list.add(position, film)
-        notifyDataSetChanged()
+        if (position == null) list.add(film) //else list.add(position, film)
+        notifyItemInserted(list.size)
     }
 }

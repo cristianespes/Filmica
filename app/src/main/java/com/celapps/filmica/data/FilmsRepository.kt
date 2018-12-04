@@ -73,6 +73,8 @@ object FilmsRepository { // Todo está en un contexto estático
 
         if (films.isEmpty()) {
             requestDiscoverFilms(page, language, callbackSuccess, callbackError, context)
+        } else if (page > 1) {
+            requestDiscoverFilms(page, language, callbackSuccess, callbackError, context)
         } else {
             callbackSuccess.invoke(films, totalPagesFilms)
         }
@@ -149,13 +151,15 @@ object FilmsRepository { // Todo está en un contexto estático
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
-                films.addAll(
+                val newFilms: MutableList<Film> = mutableListOf()
+                newFilms.addAll(
                     Film.parseFilms(
                         response
                     )
                 )
+                films.addAll(newFilms)
                 totalPagesFilms = response.optInt("total_pages", 0)
-                callbackSuccess.invoke(films, totalPagesFilms)
+                callbackSuccess.invoke(newFilms, totalPagesFilms)
             }, {error ->
                 callbackError.invoke(error)
             })

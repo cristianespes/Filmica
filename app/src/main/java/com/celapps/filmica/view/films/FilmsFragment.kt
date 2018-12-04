@@ -4,18 +4,23 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
+import com.celapps.filmica.view.util.EndlessScrollListener
 import com.celapps.filmica.view.util.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_films.*
 import kotlinx.android.synthetic.main.layout_error.*
 import java.util.*
 
 class FilmsFragment: Fragment() {
+
+    private var LastLoadPage: Int = 1
+    private var totalPages: Int? =  null
 
     lateinit var listener: OnItemClickListener
 
@@ -52,11 +57,21 @@ class FilmsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         list.adapter = adapter
-        btnRetry.setOnClickListener { this.reload() }
-    }
 
-    override fun onResume() {
-        super.onResume()
+        list.addOnScrollListener(object : EndlessScrollListener(list.layoutManager!!) {
+            override fun onLoadMore(currentPage: Int, totalItemCount: Int) {
+                if (totalItemCount > 1) {
+                    LastLoadPage++
+                    totalPages?.let {
+                        if (it >= LastLoadPage) reload(LastLoadPage)
+                    }
+                }
+            }
+
+            override fun onScroll(firstVisibleItem: Int, dy: Int, scrollPosition: Int) { }
+        })
+
+        btnRetry.setOnClickListener { this.reload() }
 
         this.reload()
     }
@@ -65,11 +80,12 @@ class FilmsFragment: Fragment() {
         FilmsRepository.discoverFilms(page = page,
             language = Locale.getDefault().language,
             context = context!!,
-            callbackSuccess = {films, total_pages ->
+            callbackSuccess = {films, totalPages ->
+                if (this.totalPages == null) this.totalPages = totalPages
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
                 list.visibility = View.VISIBLE
-                adapter.setFilms(films)
+                if (page == 1 ) adapter.setFilms(films) else adapter.updateFilms(films)
             },
 
             callbackError = {error ->
