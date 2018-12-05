@@ -62,14 +62,40 @@ data class Film(
 
             val genres = mutableListOf<String>()
 
-            for ( i in 0..(genresArray.length() - 1) ) {
+            /*for ( i in 0..(genresArray.length() - 1) ) {
                 val genreId = genresArray.getInt(i)
                 val genre = ApiConstants.genres[genreId] ?: ""
+                genres.add(genre)
+            }*/
+
+            for ( i in 0..(genresArray.length() - 1) ) {
+                val genreId = genresArray.getInt(i)
+                val genre = FilmsRepository.genres[genreId] ?: ""
                 genres.add(genre)
             }
 
             // acc: acumulador
             return genres.reduce { acc, genre -> "$acc | $genre" }
         }
+
     }
 }
+
+object Genre {
+        fun parseGenresAPI(response: JSONObject) : MutableMap<Int, String> {
+            val genresArray = response.getJSONArray("genres")
+            var map: MutableMap<Int, String> = mutableMapOf()
+
+            for (i in 0..(genresArray.length() - 1)) {
+                val genrePair = parseGenre(genresArray.getJSONObject(i))
+                map.put(genrePair.first, genrePair.second)
+            }
+
+            return map
+        }
+
+        private fun parseGenre(jsonGenre: JSONObject) : Pair<Int, String> {
+            return Pair(jsonGenre.getInt("id"), jsonGenre.getString("name"))
+        }
+}
+

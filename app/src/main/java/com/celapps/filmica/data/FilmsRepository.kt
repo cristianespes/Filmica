@@ -15,6 +15,7 @@ import kotlin.math.min
 
 // Singleton
 object FilmsRepository { // Todo está en un contexto estático
+    val genres: MutableMap<Int, String> = mutableMapOf()
     private val films: MutableList<Film> = mutableListOf()
     private var totalPagesFilms: Int = 0
     private var watchlistFilms: MutableList<Film> = mutableListOf()
@@ -217,6 +218,24 @@ object FilmsRepository { // Todo está en un contexto estático
                 totalPagesSearchFilms = response.optInt("total_pages", 0)
                 callbackSuccess.invoke(searchFilms, totalPagesSearchFilms)
             }, {error ->
+                callbackError.invoke(error)
+            })
+
+        Volley.newRequestQueue(context)
+            .add(request)
+    }
+
+    fun requestFilmGenres(language: String,
+                                  context: Context,
+                                  callbackSuccess: () -> Unit,
+                                  callbackError: (VolleyError) -> Unit) {
+        val url = ApiRoutes.genresUrl(language)
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            {response ->
+                genres.putAll( Genre.parseGenresAPI( response ) )
+                callbackSuccess.invoke()
+            }, { error ->
                 callbackError.invoke(error)
             })
 

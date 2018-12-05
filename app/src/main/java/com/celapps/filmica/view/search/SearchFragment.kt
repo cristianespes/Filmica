@@ -57,7 +57,7 @@ class SearchFragment: Fragment() {
         if (searchItem != null) {
 
             val searchView = searchItem.actionView as SearchView
-            //        searchView.queryHint = "PATATA"
+            // searchView.queryHint = "Buscar película..."
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     return true

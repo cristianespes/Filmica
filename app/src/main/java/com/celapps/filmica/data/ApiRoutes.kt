@@ -52,6 +52,17 @@ object ApiRoutes {
             .toString()
     }
 
+    // Método para recibir los géneros traducidos
+    fun genresUrl(language: String = "en-US"): String {
+        return getUriBuilder()
+            .appendPath("genre")
+            .appendPath("movie")
+            .appendPath("list")
+            .appendQueryParameter("language", language)
+            .build()
+            .toString()
+    }
+
     private fun getUriBuilder() =
         Uri.Builder()
             .scheme("https")

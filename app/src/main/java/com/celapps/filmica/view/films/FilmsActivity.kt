@@ -4,8 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.View
 import com.celapps.filmica.R
+import com.celapps.filmica.data.ApiConstants
+import com.celapps.filmica.data.ApiRoutes
 import com.celapps.filmica.data.Film
+import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.details.DetailsActivity
 import com.celapps.filmica.view.details.DetailsFragment
 import com.celapps.filmica.view.placeholder.PlaceholderFragment
@@ -13,6 +18,9 @@ import com.celapps.filmica.view.search.SearchFragment
 import com.celapps.filmica.view.trending.TrendingFragment
 import com.celapps.filmica.view.watchlist.WatchlistFragment
 import kotlinx.android.synthetic.main.activity_films.*
+import kotlinx.android.synthetic.main.fragment_films.*
+import kotlinx.android.synthetic.main.layout_error.*
+import java.util.*
 
 const val TAG_FILMS = "films"
 const val TAG_WATCHLIST = "watchlist"
@@ -40,8 +48,21 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
         setContentView(R.layout.activity_films)
 
         if (savedInstanceState == null) {
-            // Generar fragmentos
-            setupFragments()
+
+            FilmsRepository.requestFilmGenres(
+                language = Locale.getDefault().language,
+                context = this,
+                callbackSuccess = {
+                    // Generar fragmentos
+                    setupFragments()
+                },
+
+                callbackError = {error ->
+                    // Asignar géneros por defecto
+                    FilmsRepository.genres.putAll(ApiConstants.genres)
+                    error.printStackTrace()
+                })
+
         } else {
             val activeTag = savedInstanceState.getString("active", TAG_FILMS)
             // Restaurar fragmentos
