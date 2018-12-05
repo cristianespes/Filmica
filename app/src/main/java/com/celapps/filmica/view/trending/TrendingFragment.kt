@@ -14,6 +14,7 @@ import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_trending.*
 import kotlinx.android.synthetic.main.layout_error.*
+import java.util.*
 
 class TrendingFragment: Fragment() {
 
@@ -53,25 +54,24 @@ class TrendingFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         list.adapter = adapter
-        btnRetry.setOnClickListener { this.reload() }
-    }
 
-    override fun onResume() {
-        super.onResume()
+        btnRetry.setOnClickListener { this.reload() }
 
         this.reload()
     }
 
-    fun reload() {
-        FilmsRepository.trendingFilms(context!!,
-            {films, total_pages ->
+    fun reload(page: Int = 1) {
+        FilmsRepository.trendingFilms(page = page,
+            language = Locale.getDefault().language,
+            context = context!!,
+            callbackSuccess = {films, total_pages ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
                 list.visibility = View.VISIBLE
                 adapter.setFilms(films)
             },
 
-            {error ->
+            callbackError = {error ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.VISIBLE
                 list.visibility = View.INVISIBLE

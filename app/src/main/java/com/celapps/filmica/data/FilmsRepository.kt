@@ -81,12 +81,16 @@ object FilmsRepository { // Todo está en un contexto estático
     }
 
     // Método para realizar la petición GET del Trending a la API
-    fun trendingFilms(context: Context,
+    fun trendingFilms(page: Int,
+                      language: String,
+                      context: Context,
                       callbackSuccess: ((MutableList<Film>, Int) -> Unit),
                       callbackError: ((VolleyError) -> Unit)) {
 
         if (trendingFilms.isEmpty()) {
-            requestTrendingFilms(callbackSuccess, callbackError, context)
+            requestTrendingFilms(page, language, callbackSuccess, callbackError, context)
+        } else if (page > 1) {
+            requestTrendingFilms(page, language, callbackSuccess, callbackError, context)
         } else {
             callbackSuccess.invoke(trendingFilms, totalPagesTrendingFilms)
         }
@@ -169,11 +173,13 @@ object FilmsRepository { // Todo está en un contexto estático
     }
 
     private fun requestTrendingFilms(
+        page: Int,
+        language: String,
         callbackSuccess: (MutableList<Film>, Int) -> Unit,
         callbackError: (VolleyError) -> Unit,
         context: Context
     ) {
-        val url = ApiRoutes.trendingUrl()
+        val url = ApiRoutes.trendingUrl(page = page, language = language)
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->

@@ -22,12 +22,15 @@ object ApiRoutes {
     }
 
     // Método para hacer la petición de los datos Trending
-    fun trendingUrl(): String {
+    fun trendingUrl(language: String = "en-US",
+                    page: Int = 1): String {
 
         return getUriBuilder()
             .appendPath("trending")
             .appendPath("movie")
             .appendPath("day")
+            .appendQueryParameter("language", language)
+            .appendQueryParameter("page", page.toString())
             .build()
             .toString()
     }
