@@ -183,13 +183,15 @@ object FilmsRepository { // Todo está en un contexto estático
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {response ->
-                trendingFilms.addAll(
+                val newTrendingFilms: MutableList<Film> = mutableListOf()
+                newTrendingFilms.addAll(
                     Film.parseFilms(
                         response
                     )
                 )
+                trendingFilms.addAll(newTrendingFilms)
                 totalPagesTrendingFilms = response.optInt("total_pages", 0)
-                callbackSuccess.invoke(trendingFilms, totalPagesTrendingFilms)
+                callbackSuccess.invoke(newTrendingFilms, totalPagesTrendingFilms)
             }, {error ->
                 callbackError.invoke(error)
             })
