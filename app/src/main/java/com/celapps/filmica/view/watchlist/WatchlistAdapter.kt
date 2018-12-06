@@ -48,7 +48,7 @@ class WatchlistAdapter(itemClickListener: ((Film) -> Unit)? = null): BaseFilmAda
 
             Picasso.get()
                 .load(film?.getPosterUrl())
-                .error(R.drawable.placeholder)
+                .error(R.drawable.film_placeholder)
                 .into(target)
         }
 

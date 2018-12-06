@@ -49,7 +49,7 @@ class FilmsAdapter(itemClickListener: ((Film) -> Unit)? = null): BaseFilmAdapter
 
             Picasso.get()
                 .load(film?.getPosterUrl())
-                .error(R.drawable.placeholder)
+                .error(R.drawable.film_placeholder)
                 .into(target)
         }
 
