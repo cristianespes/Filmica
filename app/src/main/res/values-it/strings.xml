@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Filmica</string>
+    <string name="label_add">Aggiungere alla lista delle cose da vedere</string>
+    <string name="label_genre">Genere</string>
+    <string name="label_overview">Recensione</string>
+    <string name="label_retry">Riprovare</string>
+    <string name="title_discover">Scopri</string>
+    <string name="title_share">Condividi film</string>
+    <string name="title_trending">Tendenza</string>
+    <string name="title_search">Ricerca</string>
+    <string name="stored_movie">1 film salvato</string>
+    <string name="added_to_list">Aggiunto alla lista</string>
+    <string name="search_not_found">Nessun film trovato per questa ricerca</string>
+    <string name="error_request">Ooops, qualcosa è andato storto, per favore riprova</string>
+    <string name="label_release">Rilascio</string>
+    <string name="undo">Disfare</string>
+    <string name="deleted_movie">1 film eliminato</string>
+    <string name="empty_detail">Puoi vedere qualsiasi film qui</string>
+    <string name="min_characters">La ricerca deve contenere almeno 3 caratteri</string>
+    <string name="template_share">Vediamo% s, Movie DB lo qualifica con% .1f / 10</string>
+    <string name="title_watchlist">Seguitas</string>
+</resources>
