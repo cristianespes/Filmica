@@ -60,6 +60,7 @@ class SearchFragment: Fragment() {
         if (searchItem != null) {
 
             val searchView = searchItem.actionView as SearchView
+            searchView.maxWidth = Integer.MAX_VALUE // Set search menu as full width
             // searchView.queryHint = "Buscar película..."
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(p0: String?): Boolean {
