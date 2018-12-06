@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.*
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
@@ -13,6 +12,10 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_not_found.*
 import java.util.*
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.Toast
+
 
 class SearchFragment: Fragment() {
 
@@ -64,22 +67,34 @@ class SearchFragment: Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText == null || newText.trim().isEmpty() || (newText.length < 3)) {
-                        if (newText?.length == 0) {
-                            progress.visibility = View.VISIBLE
-                            reload()
-                            return true
-                        }
+                    if (newText == null || newText.trim().isEmpty()) {
+                        progress.visibility = View.VISIBLE
+                        reload()
 
-                        return false
+                        return true
                     }
 
-                    progress.visibility = View.VISIBLE
-                    reload(query = newText.toLowerCase())
-                    return true
+                    return false
                 }
 
             })
+
+            val searchEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as EditText
+            searchEditText.setOnEditorActionListener { newText, actionId, keyEvent ->
+                newText?.let { text ->
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH && !text.text.trim().isEmpty() && (text.text.length > 2)) {
+                        progress.visibility = View.VISIBLE
+                        reload(query = (text.text.toString().toLowerCase()))
+                    } else if (actionId == EditorInfo.IME_ACTION_SEARCH && (text.text.length < 3)) {
+                        val toast = Toast.makeText(context , getString(R.string.min_characters), Toast.LENGTH_SHORT)
+                        toast.setGravity(Gravity.TOP, 0, 200)
+                        toast.show()
+                    }
+                }
+
+                false
+            }
+
         }
 
         super.onCreateOptionsMenu(menu, inflater)

@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.View
 import com.celapps.filmica.R
 
 // dragDirs => Soporte para arrastre
@@ -28,7 +29,19 @@ abstract class SwipeToDeleteCallback: ItemTouchHelper.SimpleCallback(0, ItemTouc
         val context = recyclerView.context
         val itemView = viewHolder.itemView
 
-        // TODO: SEPARAR FUNCION PINTAR BACKGROUND
+        setupBackground(context, itemView, dX, c)
+
+        setupIcon(context, itemView, c)
+
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+    }
+
+    private fun setupBackground(
+        context: Context,
+        itemView: View,
+        dX: Float,
+        c: Canvas
+    ) {
         // Pintar Background
         val color = ContextCompat.getColor(context, R.color.colorPrimaryDark)
         val background = ColorDrawable(color)
@@ -41,8 +54,9 @@ abstract class SwipeToDeleteCallback: ItemTouchHelper.SimpleCallback(0, ItemTouc
         )
         // Añadir background a canvas
         background.draw(c)
+    }
 
-        // TODO: SEPARAR FUNCION PINTAR BACKGROUND
+    private fun setupIcon(context: Context, itemView: View, c: Canvas) {
         // Pintar icono
         val checkIcon = ContextCompat.getDrawable(context, R.drawable.ic_check)!!
         // Determinar el margen del icono
@@ -61,8 +75,6 @@ abstract class SwipeToDeleteCallback: ItemTouchHelper.SimpleCallback(0, ItemTouc
         )
         // Añadir el icono al canvas
         checkIcon.draw(c)
-
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
 }
