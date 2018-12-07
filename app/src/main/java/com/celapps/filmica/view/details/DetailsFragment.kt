@@ -156,6 +156,7 @@ class DetailsFragment: Fragment() {
 
         Picasso.get()
             .load(film?.getPosterUrl())
+            .placeholder(R.drawable.film_placeholder)
             .error(R.drawable.film_placeholder)
             .into(target)
     }

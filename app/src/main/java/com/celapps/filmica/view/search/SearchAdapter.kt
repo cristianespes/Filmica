@@ -47,6 +47,7 @@ class SearchAdapter(itemClickListener: ((Film) -> Unit)? = null): BaseFilmAdapte
 
             Picasso.get()
                 .load(film?.getPosterUrl())
+                .placeholder(R.drawable.film_placeholder)
                 .error(R.drawable.film_placeholder)
                 .into(target)
         }
