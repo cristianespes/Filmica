@@ -88,7 +88,7 @@ class SearchFragment: Fragment() {
                         reload(query = (text.text.toString().toLowerCase()))
                     } else if (actionId == EditorInfo.IME_ACTION_SEARCH && (text.text.length < 3)) {
                         val toast = Toast.makeText(context , getString(R.string.min_characters), Toast.LENGTH_SHORT)
-                        toast.setGravity(Gravity.TOP, 0, 200)
+                        toast.setGravity(Gravity.TOP, 0, 300)
                         toast.show()
                     }
                 }
