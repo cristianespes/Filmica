@@ -40,7 +40,10 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_films)
 
         if (savedInstanceState == null) {
