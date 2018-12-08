@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Filmica</string>
+    <string name="label_add">Afegir a la llista de seguiment</string>
+    <string name="label_genre">Gènere</string>
+    <string name="label_release">Estrena</string>
+    <string name="label_overview">Ressenya</string>
+    <string name="error_request">Ooops, alguna cosa ha anat malament, per favor intenta-ho de nou</string>
+    <string name="label_retry">Reintent</string>
+    <string name="title_discover">Descobrir</string>
+    <string name="title_watchlist">Seguides</string>
+    <string name="title_share">Compartir pel·lícula</string>
+    <string name="template_share">Anem a veure %s, Movie DB ho qualifica amb %.1f/10</string>
+    <string name="title_trending">Tendència</string>
+    <string name="title_search">Cerca</string>
+    <string name="added_to_list">Afegida a la llista</string>
+    <string name="search_not_found">No s\'han trobat pel·lícules per a aquesta cerca</string>
+    <string name="stored_movie">1 pel·lícula guardada</string>
+    <string name="deleted_movie">1 pel·lícula eliminada</string>
+    <string name="undo">Desfer</string>
+    <string name="empty_detail">Pots visualitzar qualsevol pel·lícula aquí</string>
+    <string name="min_characters">La cerca ha de contenir almenys 3 caràcters</string>
+    <string name="loading">Carregant</string>
+</resources>
