@@ -20,4 +20,5 @@
     <string name="deleted_movie">1 película eliminada</string>
     <string name="empty_detail">Puedes visualizar cualquier película aquí</string>
     <string name="min_characters">La búsqueda debe contener al menos 3 carácteres</string>
+    <string name="loading">Cargando</string>
 </resources>
