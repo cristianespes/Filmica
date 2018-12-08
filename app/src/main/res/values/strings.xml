@@ -17,7 +17,7 @@
     <string name="stored_movie">1 stored movie</string>
     <string name="undo">Undo</string>
     <string name="deleted_movie">1 deleted movie</string>
-    <string name="empty_detail">You can view any movie here</string>
+    <string name="empty_detail">Select any movie to display here</string>
     <string name="min_characters">The search must contain at least 3 characters</string>
     <string name="loading">Loading</string>
 </resources>

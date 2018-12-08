@@ -22,7 +22,7 @@
         android:visibility="invisible"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:spanCount="3"
-        tools:listitem="@layout/item_film" />
+        tools:listitem="@layout/item_trending" />
 
     <include layout="@layout/layout_progress" />
 
