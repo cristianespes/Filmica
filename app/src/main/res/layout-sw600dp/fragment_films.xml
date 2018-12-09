@@ -24,4 +24,6 @@
         app:spanCount="3"
         tools:listitem="@layout/item_film" />
 
+    <include layout="@layout/layout_progress" />
+
 </FrameLayout>

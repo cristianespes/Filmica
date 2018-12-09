@@ -15,6 +15,7 @@ import com.celapps.filmica.view.util.EndlessScrollListener
 import com.celapps.filmica.view.util.ItemOffsetDecoration
 import kotlinx.android.synthetic.main.fragment_films.*
 import kotlinx.android.synthetic.main.layout_error.*
+import kotlinx.android.synthetic.main.layout_progress.*
 import java.util.*
 
 class FilmsFragment: Fragment() {
@@ -63,6 +64,7 @@ class FilmsFragment: Fragment() {
                 if (totalItemCount > 1) {
                     LastLoadPage++
                     totalPages?.let {
+                        if (it > LastLoadPage) layoutProgress.visibility = View.VISIBLE
                         if (it >= LastLoadPage) reload(LastLoadPage)
                     }
                 }
@@ -84,6 +86,7 @@ class FilmsFragment: Fragment() {
                 if (this.totalPages == null) this.totalPages = totalPages
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
+                layoutProgress.visibility = View.INVISIBLE
                 list.visibility = View.VISIBLE
                 if (page == 1 ) adapter.setFilms(films) else adapter.updateFilms(films)
             },
@@ -91,6 +94,7 @@ class FilmsFragment: Fragment() {
             callbackError = {error ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.VISIBLE
+                layoutProgress.visibility = View.INVISIBLE
                 list.visibility = View.INVISIBLE
 
                 error.printStackTrace()

@@ -49,7 +49,8 @@ class TrendingAdapter(itemClickListener: ((Film) -> Unit)? = null): BaseFilmAdap
 
             Picasso.get()
                 .load(film?.getPosterUrl())
-                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.film_placeholder)
+                .error(R.drawable.film_placeholder)
                 .into(target)
         }
 
