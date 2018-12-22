@@ -15,11 +15,14 @@ import java.util.*
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.analytics.FirebaseAnalytics
 
 
 class SearchFragment: Fragment() {
 
     lateinit var listener: OnItemClickListener
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     val adapter: SearchAdapter by lazy {
         val instance = SearchAdapter { film ->
@@ -106,6 +109,13 @@ class SearchFragment: Fragment() {
 
         searchfilmslist.adapter = adapter
         btnRetry.setOnClickListener { this.reload() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+        firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Búsqueda", null)
     }
 
     fun reload(query: String = "a", page: Int = 1) {

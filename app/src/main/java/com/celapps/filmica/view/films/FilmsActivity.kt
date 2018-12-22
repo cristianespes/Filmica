@@ -15,6 +15,7 @@ import com.celapps.filmica.view.placeholder.PlaceholderFragment
 import com.celapps.filmica.view.search.SearchFragment
 import com.celapps.filmica.view.trending.TrendingFragment
 import com.celapps.filmica.view.watchlist.WatchlistFragment
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_films.*
 import java.util.*
 
@@ -30,6 +31,8 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
     private lateinit var searchFragment: SearchFragment
     private lateinit var trendingFragment: TrendingFragment
     private lateinit var activeFragment: Fragment
+
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onItemClicked(film: Film) {
         this.showDetails(film.id, activeFragment.tag ?: TAG_FILMS)
@@ -84,6 +87,13 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
             true
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        firebaseAnalytics.setCurrentScreen(this, "Actividad de Films", null)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
