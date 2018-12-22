@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Filmica</string>
+    <string name="label_add">添加到監看清單</string>
+    <string name="label_genre">屬</string>
+    <string name="label_release">首映</string>
+    <string name="label_overview">概观</string>
+    <string name="error_request">哇，出了点问题，请再试一次。</string>
+    <string name="label_retry">重试</string>
+    <string name="title_discover">發現</string>
+    <string name="title_watchlist">以下</string>
+    <string name="title_share">共用</string>
+    <string name="template_share">让我们看看 ％s，电影数据库将它评为 ％。1f / 10</string>
+    <string name="title_trending">趋势</string>
+    <string name="title_search">搜索</string>
+    <string name="added_to_list">添加到列表中</string>
+    <string name="search_not_found">添加到列表中</string>
+    <string name="stored_movie">1 保存的膠片</string>
+    <string name="undo">撤銷</string>
+    <string name="deleted_movie">1 被刪除的影片</string>
+    <string name="empty_detail">選擇要在此查看的影片</string>
+    <string name="min_characters">搜索必須至少包含3個字元</string>
+    <string name="loading">載入中</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Filmica</string>
+    <string name="label_add">Zur Merkliste hinzufügen</string>
+    <string name="label_genre">Geschlecht</string>
+    <string name="label_release">Freigabe</string>
+    <string name="label_overview">Übersicht</string>
+    <string name="error_request">Ups, etwas ist schief gelaufen, bitte versuchen Sie es noch einmal.</string>
+    <string name="label_retry">Wiederholen Sie</string>
+    <string name="title_discover">Entdecken</string>
+    <string name="title_watchlist">Gefolgt</string>
+    <string name="title_share">Film teilen</string>
+    <string name="template_share">Uns %s sehen lassen, Movie DB qualifiziert es mit %.1f/10</string>
+    <string name="title_trending">Trend</string>
+    <string name="title_search">Suche</string>
+    <string name="added_to_list">Zur Liste hinzugefügt</string>
+    <string name="search_not_found">Keine Filme für diese Suche gefunden</string>
+    <string name="stored_movie">1 gespeicherter Film</string>
+    <string name="undo">Rückgängig</string>
+    <string name="deleted_movie">1 Folie entfernt</string>
+    <string name="empty_detail">Wählen Sie hier den Film aus, den Sie sich ansehen möchten</string>
+    <string name="min_characters">Die Suche muss mindestens 3 Zeichen lang sein</string>
+    <string name="loading">Laden</string>
+</resources>

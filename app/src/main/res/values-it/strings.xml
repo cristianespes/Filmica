@@ -18,7 +18,7 @@
     <string name="deleted_movie">1 film eliminato</string>
     <string name="empty_detail">Seleziona il film che vuoi vedere qui</string>
     <string name="min_characters">La ricerca deve contenere almeno 3 caratteri</string>
-    <string name="template_share">Vediamo% s, Movie DB lo qualifica con% .1f / 10</string>
+    <string name="template_share">Vediamo % s, Movie DB lo qualifica con % .1f / 10</string>
     <string name="title_watchlist">Seguitas</string>
     <string name="loading">Caricamento</string>
 </resources>
