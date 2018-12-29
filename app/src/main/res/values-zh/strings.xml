@@ -10,7 +10,7 @@
     <string name="title_discover">發現</string>
     <string name="title_watchlist">以下</string>
     <string name="title_share">共用</string>
-    <string name="template_share">让我们看看 ％s，电影数据库将它评为 ％。1f / 10</string>
+    <string name="template_share">让我们来看看 %s，Movie DB将它评为 %.1f/10</string>
     <string name="title_trending">趋势</string>
     <string name="title_search">搜索</string>
     <string name="added_to_list">添加到列表中</string>
