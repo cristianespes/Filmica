@@ -94,6 +94,11 @@ class DetailsFragment: Fragment() {
 
         btnAdd.setOnClickListener {
             film?.let {
+
+                val params = Bundle()
+                params.putString("film", it.title)
+                firebaseAnalytics.logEvent("stored_film", params)
+
                 FilmsRepository.saveFilm(context!!, it) {film ->
                     Toast.makeText(context, getString(R.string.added_to_list), Toast.LENGTH_SHORT).show()
                     if (context is FilmsActivity) {

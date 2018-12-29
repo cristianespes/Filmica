@@ -36,6 +36,8 @@ class SearchFragment: Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true) // Para indicar que en el ciclo de vida de este fragmento, va a ejecutar un callback con un menú
 
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+
         this.reload()
     }
 
@@ -114,11 +116,18 @@ class SearchFragment: Fragment() {
     override fun onResume() {
         super.onResume()
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
         firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Búsqueda", null)
     }
 
     fun reload(query: String = "a", page: Int = 1) {
+
+        if (query != "a") {
+            val params = Bundle()
+            params.putString("query", query)
+            params.putString("page", page.toString())
+            firebaseAnalytics.logEvent("query_film", params)
+        }
+
         FilmsRepository.searchFilms(
             query = query,
             page = page,
