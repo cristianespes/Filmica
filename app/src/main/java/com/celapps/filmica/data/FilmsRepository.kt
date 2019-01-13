@@ -215,6 +215,7 @@ object FilmsRepository { // Todo está en un contexto estático
             {response ->
                 val auxList = Film.parseFilms( response )
                 searchFilms.addAll( auxList.subList(0, min(10, auxList.size )) )
+                // searchFilms.addAll( auxList )
                 totalPagesSearchFilms = response.optInt("total_pages", 0)
                 callbackSuccess.invoke(searchFilms, totalPagesSearchFilms)
             }, {error ->

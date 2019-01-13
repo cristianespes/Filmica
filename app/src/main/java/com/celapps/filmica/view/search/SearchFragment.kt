@@ -4,6 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.SearchView
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
@@ -15,6 +18,7 @@ import java.util.*
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.android.volley.TimeoutError
 import com.google.firebase.analytics.FirebaseAnalytics
 
 
@@ -86,20 +90,47 @@ class SearchFragment: Fragment() {
             })
 
             val searchEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as EditText
+
             searchEditText.setOnEditorActionListener { newText, actionId, keyEvent ->
                 newText?.let { text ->
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH && !text.text.trim().isEmpty() && (text.text.length > 2)) {
-                        progress.visibility = View.VISIBLE
-                        reload(query = (text.text.toString().toLowerCase()))
-                    } else if (actionId == EditorInfo.IME_ACTION_SEARCH && (text.text.length < 3)) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH && (text.text.length < 3)) {
                         val toast = Toast.makeText(context , getString(R.string.min_characters), Toast.LENGTH_SHORT)
                         toast.setGravity(Gravity.TOP, 0, 300)
                         toast.show()
-                    }
+                    } /*else if (actionId == EditorInfo.IME_ACTION_SEARCH && !text.text.trim().isEmpty() && (text.text.length > 2)) {
+                        progress.visibility = View.VISIBLE
+                        reload(query = (text.text.toString().toLowerCase()))
+                    }*/
                 }
 
                 false
             }
+
+            searchEditText.addTextChangedListener( object : TextWatcher {
+                var timer = Timer()
+
+                override fun afterTextChanged(p0: Editable?) {
+                    timer.cancel()
+                    timer = Timer()
+                    timer.schedule(object : TimerTask() {
+                        override fun run() {
+                            activity!!.runOnUiThread {
+                                if (!searchEditText.text.trim().isEmpty() && (searchEditText.text.length > 2)) {
+                                    progress.visibility = View.VISIBLE
+                                    reload(query = (searchEditText.text.toString().toLowerCase()))
+                                }
+                            }
+                        }
+                    }, 1000)
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)  = Unit
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    timer.cancel()
+                }
+
+            })
 
         }
 

@@ -11,8 +11,10 @@ import java.util.*
 
 @Entity
 data class Film(
-    @PrimaryKey val id: String = UUID.randomUUID().toString(),
-    @ColumnInfo (name = "vote_rating") var voteRating: Double = 0.0,
+    @PrimaryKey
+    val id: String = UUID.randomUUID().toString(),
+    @ColumnInfo (name = "vote_rating")
+    var voteRating: Double = 0.0,
     var title: String = "",
     var genre: String = "",
     var release: String = "",
@@ -61,12 +63,6 @@ data class Film(
         private fun parseGenres(genresArray: JSONArray) : String {
 
             val genres = mutableListOf<String>()
-
-            /*for ( i in 0..(genresArray.length() - 1) ) {
-                val genreId = genresArray.getInt(i)
-                val genre = ApiConstants.genres[genreId] ?: ""
-                genres.add(genre)
-            }*/
 
             for ( i in 0..(genresArray.length() - 1) ) {
                 val genreId = genresArray.getInt(i)
