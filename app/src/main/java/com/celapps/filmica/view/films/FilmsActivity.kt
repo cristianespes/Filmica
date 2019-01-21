@@ -58,7 +58,8 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
             callbackError = {error ->
                 // Asignar géneros por defecto
                 FilmsRepository.genres.putAll(ApiConstants.genres)
-                error.printStackTrace()
+                setupFragments()
+                //error.printStackTrace()
             })
 
         } else {
@@ -188,7 +189,6 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
             callbackSuccess = {
                 callbackSuccess.invoke()
             },
-
             callbackError = {error ->
                 callbackError.invoke(error)
             })
