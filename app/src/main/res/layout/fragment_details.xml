@@ -8,13 +8,12 @@
     android:id="@+id/fragment_details" >
 
     <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp" >
+        android:paddingBottom="16dp">
 
         <ImageView
-            android:id="@+id/imgPoster"
+            android:id="@+id/imgBackdrop"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
@@ -23,17 +22,17 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/film_placeholder" />
 
         <View
             android:id="@+id/overlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgPoster"
-            app:layout_constraintEnd_toEndOf="@+id/imgPoster"
-            app:layout_constraintStart_toStartOf="@+id/imgPoster"
-            app:layout_constraintTop_toTopOf="@+id/imgPoster" />
+            app:layout_constraintBottom_toBottomOf="@+id/imgBackdrop"
+            app:layout_constraintEnd_toEndOf="@+id/imgBackdrop"
+            app:layout_constraintStart_toStartOf="@+id/imgBackdrop"
+            app:layout_constraintTop_toTopOf="@+id/imgBackdrop" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline"
@@ -54,27 +53,41 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="@+id/imgPoster"
-            app:layout_constraintStart_toStartOf="@+id/imgPoster"
-            app:layout_constraintTop_toTopOf="@+id/imgPoster"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/imgPoster"
+            app:layout_constraintTop_toTopOf="@+id/imgBackdrop"
             tools:text="Film" />
 
         <TextView
             android:id="@+id/labelVotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textColor="@android:color/white"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:drawableStart="@drawable/ic_votes"
             android:drawableLeft="@drawable/ic_votes"
             android:drawablePadding="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/imgPoster"
             app:layout_constraintTop_toBottomOf="@+id/labelTitle"
-            tools:text="10.0"/>
+            tools:text="10.0" />
+
+        <ImageView
+            android:id="@+id/imgPoster"
+            android:layout_width="80dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnAdd"
@@ -107,12 +120,11 @@
             android:id="@+id/labelGenre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/titleGenre"
             app:layout_constraintTop_toBottomOf="@+id/titleGenre"
@@ -137,9 +149,9 @@
             android:id="@+id/labelRelease"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@+id/titleRelease"
             app:layout_constraintTop_toBottomOf="@+id/titleRelease"
             tools:text="2010-10-10" />
@@ -163,15 +175,22 @@
             android:id="@+id/labelOverview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="Lorem Ipsum"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/titleOverview"
             app:layout_constraintTop_toBottomOf="@+id/titleOverview" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="88dp" />
 
     </android.support.constraint.ConstraintLayout>
 

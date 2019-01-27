@@ -19,16 +19,17 @@ data class Film(
     var genre: String = "",
     var release: String = "",
     var overview: String = "",
-    var poster: String = ""
+    var poster: String = "",
+    var backdrop: String = ""
 ) {
 
     // Si intento ejecutar una creación sin argumento, ignorar esa insercción a la BBDD
     @Ignore
     constructor(): this("")
 
-    fun getPosterUrl() : String {
-        return "$BASE_POSTER_URL$poster"
-    }
+    fun getPosterUrl() : String = "$BASE_POSTER_URL$poster"
+
+    fun getBackdropUrl() : String = "$BASE_POSTER_URL$backdrop"
 
     companion object {
         // Método para parsear el array de resultados y devolver un listado de películas
@@ -56,7 +57,8 @@ data class Film(
                 release = jsonFilm.optString("release_date", "Undated"),
                 // poster es opcional
                 poster = jsonFilm.optString("poster_path", jsonFilm.optString("logo_path", "")),
-                genre = if (jsonFilm.optJSONArray("genre_ids").length() > 0) parseGenres(jsonFilm.optJSONArray("genre_ids")) else ""
+                genre = if (jsonFilm.optJSONArray("genre_ids").length() > 0) parseGenres(jsonFilm.optJSONArray("genre_ids")) else "",
+                backdrop = jsonFilm.optString("backdrop_path", "")
             )
         }
 

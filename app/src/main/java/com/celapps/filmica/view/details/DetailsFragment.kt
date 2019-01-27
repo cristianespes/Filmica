@@ -159,7 +159,7 @@ class DetailsFragment: Fragment() {
         val target = SimpleTarget(
             successCallback = { bitmap, from ->
                 // Adjuntamos la imagen
-                imgPoster.setImageBitmap(bitmap) // Seteamos el método setImageBitmap en FadeImageView
+                imgBackdrop.setImageBitmap(bitmap) // Seteamos el método setImageBitmap en FadeImageView
 
                 // Añadir el color el bitmap al contenedor
                 setColorFrom(bitmap)
@@ -167,13 +167,17 @@ class DetailsFragment: Fragment() {
         )
 
         // Strong Reference para que no destruya la instancia del target
-        imgPoster.tag = target
+        imgBackdrop.tag = target
 
         Picasso.get()
-            .load(film?.getPosterUrl())
+            .load(film?.getBackdropUrl())
             .placeholder(R.drawable.film_placeholder)
             .error(R.drawable.film_placeholder)
             .into(target)
+
+        Picasso.get()
+            .load(film?.getPosterUrl())
+            .into(imgPoster)
     }
 
     private fun setColorFrom(bitmap: Bitmap) {

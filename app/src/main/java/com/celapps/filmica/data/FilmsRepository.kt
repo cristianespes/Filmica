@@ -35,7 +35,10 @@ object FilmsRepository { // Todo está en un contexto estático
 
     private fun getDbInstance(context: Context) : AppDatabase {
         if (db == null) {
-            db = Room.databaseBuilder(context, AppDatabase::class.java, "filmica-db").build()
+            db = Room
+                .databaseBuilder(context, AppDatabase::class.java, "filmica-db")
+                .addMigrations(MIGRATION_1_2)
+                .build()
         }
 
         return db as AppDatabase

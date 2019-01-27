@@ -15,6 +15,7 @@ import com.celapps.filmica.view.placeholder.PlaceholderFragment
 import com.celapps.filmica.view.search.SearchFragment
 import com.celapps.filmica.view.trending.TrendingFragment
 import com.celapps.filmica.view.watchlist.WatchlistFragment
+import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_films.*
 import java.util.*
@@ -43,6 +44,8 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Stetho.initializeWithDefaults(this)
+
         setTheme(R.style.AppTheme)
 
         super.onCreate(savedInstanceState)
