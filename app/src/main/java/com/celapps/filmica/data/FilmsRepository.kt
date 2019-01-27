@@ -132,7 +132,33 @@ object FilmsRepository { // Todo está en un contexto estático
             }
 
             val films: List<Film> = async.await()
+
+            // TODO: IMPLEMENTAR RECUPERAR BACKDROP
+            films.forEach { film ->
+                if ( film.backdrop.isEmpty() ) {
+                    requestSearchFilms(film.title, 1, "", callbackSuccess = { list, _ ->
+                        list.forEach {searchFilm ->
+                            if ( film.id == searchFilm.id ) {
+                                film.backdrop = searchFilm.backdrop
+
+
+                                GlobalScope.launch(Dispatchers.Main) {
+                                    val async = async(Dispatchers.IO) {
+                                        val db = getDbInstance(context)
+                                        db.filmDao().updateFilm(film)
+                                    }
+                                }
+
+
+
+                            }
+                        }
+                    }, callbackError = {}, context = context)
+                }
+            }
+
             watchlistFilms = films.toMutableList()
+
             callbackSuccess.invoke(films)
         }
     }
