@@ -13,20 +13,19 @@
         android:layout_gravity="center"
         android:indeterminate="true" />
 
-    <include layout="@layout/layout_error" />
-
-    <include layout="@layout/layout_not_found" />
-
     <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/searchfilmslist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
+        android:background="@color/colorPrimaryLight"
+        android:paddingTop="8dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:context=".view.search.SearchFragment"
         tools:listitem="@layout/item_search"/>
+
+    <include layout="@layout/layout_error" />
+
+    <include layout="@layout/layout_not_found" />
 
 </FrameLayout>

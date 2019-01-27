@@ -168,9 +168,14 @@ class SearchFragment: Fragment() {
             callbackSuccess = {films, total_pages ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
-                layoutNotFound.visibility = View.INVISIBLE
-                if (films.size == 0) layoutNotFound.visibility = View.VISIBLE else layoutNotFound.visibility = View.INVISIBLE
-                searchfilmslist.visibility = View.VISIBLE
+                if (films.size == 0) {
+                    layoutNotFound.visibility = View.VISIBLE
+                    searchfilmslist.visibility = View.INVISIBLE
+                } else {
+                    layoutNotFound.visibility = View.INVISIBLE
+                    searchfilmslist.visibility = View.VISIBLE
+                }
+
 
                 adapter.setFilms(films) //films.sortedWith(compareBy { it.title }).toMutableList()
             },
