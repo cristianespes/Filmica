@@ -3,8 +3,8 @@
     <string name="app_name">Filmica</string>
     <string name="label_add">Adicionar à lista</string>
     <string name="label_genre">Gênero</string>
-    <string name="label_release">Lançamento</string>
-    <string name="label_overview">Premiere</string>
+    <string name="label_release">Premiere</string>
+    <string name="label_overview">Sinopse</string>
     <string name="error_request">Ooops, algo correu mal, por favor tente novamente.</string>
     <string name="label_retry">Tentar de novo</string>
     <string name="title_discover">Descobrir</string>

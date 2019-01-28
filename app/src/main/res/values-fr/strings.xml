@@ -4,7 +4,7 @@
     <string name="label_add">Ajouter à la liste de surveillance</string>
     <string name="label_genre">Genre</string>
     <string name="label_release">Première</string>
-    <string name="label_overview">Présentation</string>
+    <string name="label_overview">Synopsis</string>
     <string name="error_request">Oups, quelque chose s\'est mal passé, s\'il vous plaît essayez à nouveau.</string>
     <string name="label_retry">Réessayer</string>
     <string name="title_discover">Découvrez</string>

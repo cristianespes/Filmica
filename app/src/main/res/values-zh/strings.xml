@@ -4,7 +4,7 @@
     <string name="label_add">添加到監看清單</string>
     <string name="label_genre">屬</string>
     <string name="label_release">首映</string>
-    <string name="label_overview">概观</string>
+    <string name="label_overview">简介</string>
     <string name="error_request">哇，出了点问题，请再试一次。</string>
     <string name="label_retry">重试</string>
     <string name="title_discover">發現</string>

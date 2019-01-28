@@ -3,7 +3,7 @@
     <string name="app_name">Filmica</string>
     <string name="label_add">Aggiungere alla lista delle cose da vedere</string>
     <string name="label_genre">Genere</string>
-    <string name="label_overview">Recensione</string>
+    <string name="label_overview">Sinossi</string>
     <string name="label_retry">Riprovare</string>
     <string name="title_discover">Scopri</string>
     <string name="title_share">Condividi film</string>
