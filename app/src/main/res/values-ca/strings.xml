@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Filmica</string>
     <string name="label_add">Afegir a la llista de seguiment</string>
     <string name="label_genre">Gènere</string>
     <string name="label_release">Estrena</string>

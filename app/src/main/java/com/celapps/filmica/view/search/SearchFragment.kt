@@ -2,11 +2,10 @@ package com.celapps.filmica.view.search
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.SearchView
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
@@ -18,15 +17,14 @@ import java.util.*
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.android.volley.TimeoutError
-import com.google.firebase.analytics.FirebaseAnalytics
 
 
-class SearchFragment: Fragment() {
+class SearchFragment : Fragment() {
 
     lateinit var listener: OnItemClickListener
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    // Before, create Policy Privacy
+    //private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     val adapter: SearchAdapter by lazy {
         val instance = SearchAdapter { film ->
@@ -40,7 +38,8 @@ class SearchFragment: Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true) // Para indicar que en el ciclo de vida de este fragmento, va a ejecutar un callback con un menú
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+        // Before, create Policy Privacy
+        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
 
         this.reload()
     }
@@ -71,7 +70,7 @@ class SearchFragment: Fragment() {
             val searchView = searchItem.actionView as SearchView
             searchView.maxWidth = Integer.MAX_VALUE // Set search menu as full width
             // searchView.queryHint = "Buscar película..."
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(p0: String?): Boolean {
                     return true
                 }
@@ -86,15 +85,13 @@ class SearchFragment: Fragment() {
 
                     return false
                 }
-
             })
 
-            val searchEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as EditText
-
+            val searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
             searchEditText.setOnEditorActionListener { newText, actionId, keyEvent ->
                 newText?.let { text ->
                     if (actionId == EditorInfo.IME_ACTION_SEARCH && (text.text.length < 3)) {
-                        val toast = Toast.makeText(context , getString(R.string.min_characters), Toast.LENGTH_SHORT)
+                        val toast = Toast.makeText(context, getString(R.string.min_characters), Toast.LENGTH_SHORT)
                         toast.setGravity(Gravity.TOP, 0, 300)
                         toast.show()
                     } /*else if (actionId == EditorInfo.IME_ACTION_SEARCH && !text.text.trim().isEmpty() && (text.text.length > 2)) {
@@ -106,7 +103,7 @@ class SearchFragment: Fragment() {
                 false
             }
 
-            searchEditText.addTextChangedListener( object : TextWatcher {
+            searchEditText.addTextChangedListener(object : TextWatcher {
                 var timer = Timer()
 
                 override fun afterTextChanged(p0: Editable?) {
@@ -124,7 +121,7 @@ class SearchFragment: Fragment() {
                     }, 1000)
                 }
 
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)  = Unit
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     timer.cancel()
@@ -147,7 +144,7 @@ class SearchFragment: Fragment() {
     override fun onResume() {
         super.onResume()
 
-        firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Búsqueda", null)
+        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Búsqueda", null)
     }
 
     fun reload(query: String = "a", page: Int = 1) {
@@ -156,7 +153,7 @@ class SearchFragment: Fragment() {
             val params = Bundle()
             params.putString("query", query)
             params.putString("page", page.toString())
-            firebaseAnalytics.logEvent("query_film", params)
+            //firebaseAnalytics.logEvent("query_film", params)
         }
 
         FilmsRepository.searchFilms(
@@ -165,7 +162,7 @@ class SearchFragment: Fragment() {
             language = Locale.getDefault().language,
             context = context!!,
 
-            callbackSuccess = {films, total_pages ->
+            callbackSuccess = { films, total_pages ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
                 if (films.size == 0) {
@@ -180,7 +177,7 @@ class SearchFragment: Fragment() {
                 adapter.setFilms(films) //films.sortedWith(compareBy { it.title }).toMutableList()
             },
 
-            callbackError = {error ->
+            callbackError = { error ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.VISIBLE
                 layoutNotFound.visibility = View.INVISIBLE

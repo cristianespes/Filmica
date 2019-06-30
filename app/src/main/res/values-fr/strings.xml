@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Filmica</string>
     <string name="label_add">Ajouter à la liste de surveillance</string>
     <string name="label_genre">Genre</string>
     <string name="label_release">Première</string>

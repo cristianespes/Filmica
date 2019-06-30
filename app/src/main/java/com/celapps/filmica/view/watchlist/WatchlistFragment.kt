@@ -3,28 +3,25 @@ package com.celapps.filmica.view.watchlist
 
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_watchlist.*
-
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.SwipeToDeleteCallback
-import com.google.firebase.analytics.FirebaseAnalytics
 
 class WatchlistFragment : Fragment() {
 
     lateinit var listener: OnItemClickListener
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    //private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     val adapter: WatchlistAdapter by lazy {
         val instance = WatchlistAdapter { film ->
@@ -60,10 +57,10 @@ class WatchlistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
-        firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Watchlist", null)
+        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Watchlist", null)
 
-        FilmsRepository.watchlist(context!!) {films ->
+        FilmsRepository.watchlist(context!!) { films ->
             adapter.setFilms(films.toMutableList())
         }
     }
@@ -81,12 +78,12 @@ class WatchlistFragment : Fragment() {
     }
 
     private fun deleteFilmAt(position: Int) {
-        var film = adapter.getFilm(position)
+        val film = adapter.getFilm(position)
         FilmsRepository.deleteFilm(context!!, film) {
             adapter.removeFilmAt(position)
 
             Snackbar
-                .make( watchlist, getString(R.string.deleted_movie), Snackbar.LENGTH_LONG )
+                .make(watchlist, getString(R.string.deleted_movie), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo)) {
                     FilmsRepository.saveFilm(context!!, film)
                     adapter.addFilm(film)
