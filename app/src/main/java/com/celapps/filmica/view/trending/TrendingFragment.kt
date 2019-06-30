@@ -12,23 +12,23 @@ import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.EndlessScrollListener
 import com.celapps.filmica.view.util.ItemOffsetDecoration
-import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.fragment_trending.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_progress.*
 import java.util.*
 
-class TrendingFragment: Fragment() {
+class TrendingFragment : Fragment() {
 
     private var LastLoadPage: Int = 1
-    private var totalPages: Int? =  null
+    private var totalPages: Int? = null
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    //private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     lateinit var listener: OnItemClickListener
 
     val list: RecyclerView by lazy {
-        val instance = view!!.findViewById<RecyclerView>(R.id.list_films) // la vista que estamos retornando en el onCreateView
+        val instance =
+            view!!.findViewById<RecyclerView>(R.id.list_films) // la vista que estamos retornando en el onCreateView
         instance.addItemDecoration(ItemOffsetDecoration(R.dimen.offset_grid))
         instance.setHasFixedSize(true)
 
@@ -73,7 +73,7 @@ class TrendingFragment: Fragment() {
                 }
             }
 
-            override fun onScroll(firstVisibleItem: Int, dy: Int, scrollPosition: Int) { }
+            override fun onScroll(firstVisibleItem: Int, dy: Int, scrollPosition: Int) {}
         })
 
         btnRetry.setOnClickListener { this.reload() }
@@ -84,24 +84,24 @@ class TrendingFragment: Fragment() {
     override fun onResume() {
         super.onResume()
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
-        firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Trending", null)
+        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Trending", null)
     }
 
     fun reload(page: Int = 1) {
         FilmsRepository.trendingFilms(page = page,
             language = Locale.getDefault().language,
             context = context!!,
-            callbackSuccess = {films, totalPages ->
+            callbackSuccess = { films, totalPages ->
                 if (this.totalPages == null) this.totalPages = totalPages
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.INVISIBLE
                 layoutProgress.visibility = View.INVISIBLE
                 list.visibility = View.VISIBLE
-                if (page == 1 ) adapter.setFilms(films) else adapter.updateFilms(films)
+                if (page == 1) adapter.setFilms(films) else adapter.updateFilms(films)
             },
 
-            callbackError = {error ->
+            callbackError = { error ->
                 progress.visibility = View.INVISIBLE
                 layoutError.visibility = View.VISIBLE
                 layoutProgress.visibility = View.INVISIBLE

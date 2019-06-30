@@ -17,14 +17,14 @@ import java.util.*
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.analytics.FirebaseAnalytics
 
 
 class SearchFragment : Fragment() {
 
     lateinit var listener: OnItemClickListener
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    // Before, create Policy Privacy
+    //private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     val adapter: SearchAdapter by lazy {
         val instance = SearchAdapter { film ->
@@ -38,7 +38,8 @@ class SearchFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true) // Para indicar que en el ciclo de vida de este fragmento, va a ejecutar un callback con un menú
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+        // Before, create Policy Privacy
+        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
 
         this.reload()
     }
@@ -143,7 +144,7 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Búsqueda", null)
+        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Búsqueda", null)
     }
 
     fun reload(query: String = "a", page: Int = 1) {
@@ -152,7 +153,7 @@ class SearchFragment : Fragment() {
             val params = Bundle()
             params.putString("query", query)
             params.putString("page", page.toString())
-            firebaseAnalytics.logEvent("query_film", params)
+            //firebaseAnalytics.logEvent("query_film", params)
         }
 
         FilmsRepository.searchFilms(
