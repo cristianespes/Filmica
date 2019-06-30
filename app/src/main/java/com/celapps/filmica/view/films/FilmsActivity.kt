@@ -2,8 +2,8 @@ package com.celapps.filmica.view.films
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.VolleyError
 import com.celapps.filmica.R
 import com.celapps.filmica.data.ApiConstants
