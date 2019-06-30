@@ -25,7 +25,7 @@
     </LinearLayout>
 
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +36,6 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation">
 
-    </android.support.design.widget.BottomNavigationView>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </LinearLayout>

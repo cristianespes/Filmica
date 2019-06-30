@@ -2,8 +2,8 @@ package com.celapps.filmica.view.watchlist
 
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.support.v4.content.ContextCompat
-import android.support.v7.graphics.Palette
+import androidx.core.content.ContextCompat
+import androidx.palette.graphics.Palette
 import android.view.View
 import com.celapps.filmica.R
 import com.celapps.filmica.data.Film

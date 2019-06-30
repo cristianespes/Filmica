@@ -6,11 +6,10 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.graphics.Palette
-import android.util.Log
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.palette.graphics.Palette
 import android.view.*
 import android.widget.Toast
 import com.celapps.filmica.R
@@ -18,19 +17,18 @@ import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.films.FilmsActivity
 import com.celapps.filmica.view.util.SimpleTarget
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
 
-class DetailsFragment: Fragment() {
+class DetailsFragment : Fragment() {
 
     lateinit var listener: OnItemClickListener
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    //private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     // Método estático dentro de la clase
     companion object {
-        fun newInstance(id: String, tag: String) : DetailsFragment {
+        fun newInstance(id: String, tag: String): DetailsFragment {
             val instance = DetailsFragment()
             val args = Bundle()
             args.putString("id", id)
@@ -68,8 +66,8 @@ class DetailsFragment: Fragment() {
     override fun onResume() {
         super.onResume()
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
-        firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de detalle", null)
+        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
+        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de detalle", null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,7 +80,8 @@ class DetailsFragment: Fragment() {
 
         film?.let {
             with(it) {
-                labelTitle.text = title // podemos utilizar el id indicado en el activity gracias al plugin android-extension
+                labelTitle.text =
+                    title // podemos utilizar el id indicado en el activity gracias al plugin android-extension
                 labelOverview.text = overview
                 labelGenre.text = genre
                 labelRelease.text = release
@@ -97,18 +96,18 @@ class DetailsFragment: Fragment() {
 
                 val params = Bundle()
                 params.putString("film", it.title)
-                firebaseAnalytics.logEvent("stored_film", params)
+                //firebaseAnalytics.logEvent("stored_film", params)
 
-                FilmsRepository.saveFilm(context!!, it) {film ->
+                FilmsRepository.saveFilm(context!!, it) { film ->
                     Toast.makeText(context, getString(R.string.added_to_list), Toast.LENGTH_SHORT).show()
                     if (context is FilmsActivity) {
                         this.listener.onButtonClicked(film) // Solo en tablets
                     }
 
                     Snackbar
-                        .make( fragment_details, getString(R.string.stored_movie), Snackbar.LENGTH_LONG )
+                        .make(fragment_details, getString(R.string.stored_movie), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.undo)) {
-                            context?.let {context ->
+                            context?.let { context ->
                                 FilmsRepository.deleteFilm(context, film)
                                 if (context is FilmsActivity) {
                                     this.listener.onButtonClicked(film) // Solo en tablets
@@ -121,7 +120,7 @@ class DetailsFragment: Fragment() {
             }
         }
 
-        when(tag) {
+        when (tag) {
             FilmsRepository.TAG_FILMS -> btnAdd.show()
             FilmsRepository.TAG_WATCHLIST -> btnAdd.hide()
             FilmsRepository.TAG_SEARCH -> btnAdd.show()
@@ -132,10 +131,10 @@ class DetailsFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         // Validar que es el item que esperamos
         //if (item?.itemId == R.id.action_share) {
-            // Code
+        // Code
         //}
 
-        item.takeIf { item?.itemId == R.id.action_share }?.let {menuItem ->
+        item.takeIf { item?.itemId == R.id.action_share }?.let { menuItem ->
             shareFilm()
         }
 
@@ -170,21 +169,24 @@ class DetailsFragment: Fragment() {
         imgBackdrop.tag = target
 
         Picasso.get()
-            .load(film?.getBackdropUrl())
+            .load(film.getBackdropUrl())
             .placeholder(R.drawable.film_placeholder)
             .error(R.drawable.film_placeholder)
             .into(target)
 
         Picasso.get()
-            .load(film?.getPosterUrl())
+            .load(film.getPosterUrl())
             .into(imgPoster)
     }
 
     private fun setColorFrom(bitmap: Bitmap) {
         Palette.from(bitmap).generate { palette ->
-            val defaultColor = ContextCompat.getColor(context!!, R.color.colorPrimary) // Color por defecto si no extrae ninguno
-            val swatch = palette?.vibrantSwatch ?: palette?.dominantSwatch // vibrantSwatch no siempre obtiene resultado, domiantSwatch suele obtener más
-            val color = swatch?.rgb ?: defaultColor // tomamos el rgb generado por el swatch o en su defecto el que indicamos por defecto
+            val defaultColor =
+                ContextCompat.getColor(context!!, R.color.colorPrimary) // Color por defecto si no extrae ninguno
+            val swatch = palette?.vibrantSwatch
+                ?: palette?.dominantSwatch // vibrantSwatch no siempre obtiene resultado, domiantSwatch suele obtener más
+            val color = swatch?.rgb
+                ?: defaultColor // tomamos el rgb generado por el swatch o en su defecto el que indicamos por defecto
             val overlayColor = Color.argb(
                 (Color.alpha(color) * 0.5).toInt(),
                 Color.red(color),

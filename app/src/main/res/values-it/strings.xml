@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Filmica</string>
     <string name="label_add">Aggiungere alla lista delle cose da vedere</string>
     <string name="label_genre">Genere</string>
     <string name="label_overview">Sinossi</string>
