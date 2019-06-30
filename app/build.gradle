@@ -21,9 +21,22 @@ android {
         buildConfigField "String", "MovieDBApiKey", MovieDBApiKey
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            applicationIdSuffix ".develop"
+        }
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions 'social'
+    productFlavors {
+        filmica {
+            applicationId 'com.celapps.filmica'
         }
     }
 }
