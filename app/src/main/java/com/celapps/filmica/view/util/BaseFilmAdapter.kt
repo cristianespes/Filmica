@@ -2,7 +2,6 @@ package com.celapps.filmica.view.util
 
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

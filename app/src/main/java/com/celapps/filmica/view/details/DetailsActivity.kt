@@ -15,11 +15,13 @@ class DetailsActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
 
             // ActionBar
-            val actionBar = supportActionBar!!
-            actionBar.setDisplayHomeAsUpEnabled(true) // Back Button
+            supportActionBar?.setDisplayHomeAsUpEnabled(true) // Back Button
 
             val id = intent.getStringExtra("id")
             val tag = intent.getStringExtra("tag")
+
+            // TODO: Mostar error
+            if (id == null || tag == null) return
 
             val detailsFragment =
                 DetailsFragment.newInstance(id, tag) // Creamos fragmento

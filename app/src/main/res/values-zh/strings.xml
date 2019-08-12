@@ -20,4 +20,6 @@
     <string name="empty_detail">選擇要在此查看的影片</string>
     <string name="min_characters">搜索必須至少包含3個字元</string>
     <string name="loading">載入中</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="error_opening_link">打开链接时出错</string>
 </resources>
