@@ -20,4 +20,6 @@
     <string name="empty_detail">Pots visualitzar qualsevol pel·lícula aquí</string>
     <string name="min_characters">La cerca ha de contenir almenys 3 caràcters</string>
     <string name="loading">Carregant</string>
+    <string name="privacy_policy">Política de privacitat</string>
+    <string name="error_opening_link">Error en obrir el link</string>
 </resources>

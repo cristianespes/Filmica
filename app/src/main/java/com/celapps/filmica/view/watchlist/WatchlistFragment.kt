@@ -16,12 +16,13 @@ import com.celapps.filmica.R
 import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.util.SwipeToDeleteCallback
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class WatchlistFragment : Fragment() {
 
     lateinit var listener: OnItemClickListener
 
-    //private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     val adapter: WatchlistAdapter by lazy {
         val instance = WatchlistAdapter { film ->
@@ -57,8 +58,10 @@ class WatchlistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
-        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Watchlist", null)
+        context?.let {
+            firebaseAnalytics = FirebaseAnalytics.getInstance(it)
+            firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Watchlist", null)
+        }
 
         FilmsRepository.watchlist(context!!) { films ->
             adapter.setFilms(films.toMutableList())
