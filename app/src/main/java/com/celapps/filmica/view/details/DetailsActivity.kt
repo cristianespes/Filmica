@@ -3,10 +3,11 @@ package com.celapps.filmica.view.details
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.celapps.filmica.R
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class DetailsActivity : AppCompatActivity() {
 
-    //private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,8 @@ class DetailsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        //firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        //firebaseAnalytics.setCurrentScreen(this, "Actividad de Detalle", null)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        firebaseAnalytics.setCurrentScreen(this, "Actividad de Detalle", null)
     }
 
     // Back View

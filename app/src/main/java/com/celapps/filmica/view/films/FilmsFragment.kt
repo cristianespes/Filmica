@@ -13,6 +13,7 @@ import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.privacypolicy.PrivacyPolicyActivity
 import com.celapps.filmica.view.util.EndlessScrollListener
 import com.celapps.filmica.view.util.ItemOffsetDecoration
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.fragment_films.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_progress.*
@@ -23,7 +24,7 @@ class FilmsFragment: Fragment() {
     private var LastLoadPage: Int = 1
     private var totalPages: Int? =  null
 
-    //private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     lateinit var listener: OnItemClickListener
 
@@ -105,8 +106,10 @@ class FilmsFragment: Fragment() {
     override fun onResume() {
         super.onResume()
 
-        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
-        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Films", null)
+        context?.let {
+            firebaseAnalytics = FirebaseAnalytics.getInstance(it)
+            firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de Films", null)
+        }
     }
 
     fun reload(page: Int = 1) {
