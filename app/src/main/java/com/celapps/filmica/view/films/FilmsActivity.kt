@@ -11,6 +11,8 @@ import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.details.DetailsActivity
 import com.celapps.filmica.view.details.DetailsFragment
+import com.celapps.filmica.view.imageviewer.ImageViewerActivity
+import com.celapps.filmica.view.imageviewer.ImageViewerFragment
 import com.celapps.filmica.view.placeholder.PlaceholderFragment
 import com.celapps.filmica.view.privacypolicy.PrivacyPolicyActivity
 import com.celapps.filmica.view.search.SearchFragment
@@ -26,7 +28,10 @@ const val TAG_WATCHLIST = "watchlist"
 const val TAG_SEARCH = "search"
 const val TAG_TRENDING = "trending"
 
-class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, WatchlistFragment.OnItemClickListener, TrendingFragment.OnItemClickListener, SearchFragment.OnItemClickListener, DetailsFragment.OnItemClickListener {
+class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener,
+    WatchlistFragment.OnItemClickListener, TrendingFragment.OnItemClickListener,
+    SearchFragment.OnItemClickListener, DetailsFragment.OnItemClickListener,
+    ImageViewerFragment.OnBackClickListener {
 
     private lateinit var filmsFragment: FilmsFragment
     private lateinit var watchlistFragment: WatchlistFragment
@@ -46,6 +51,14 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
 
     override fun onButtonClicked(film: Film) {
         watchlistFragment.addFilm(film)
+    }
+
+    override fun onItemClicked(id: String, imageUrl: String) {
+        this.showImageViewer(id, imageUrl, activeFragment.tag ?: TAG_FILMS)
+    }
+
+    override fun onBackClicked(id: String) {
+        showDetailsFragment(id, activeFragment.tag ?: TAG_FILMS)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,6 +206,25 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
 
     private fun launchPrivacyPolicyActivity() {
         val intent = Intent(this, PrivacyPolicyActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun showImageViewer(id: String, imageUrl: String, tag: String) {
+        if (isTablet()) showImageViewerFragment(id, imageUrl, tag)
+    }
+
+    private fun showImageViewerFragment(id: String, imageUrl: String, tag: String) {
+        val imageViewerFragment = ImageViewerFragment.newInstance(id, imageUrl, tag)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.containerDetails, imageViewerFragment)
+            .commit()
+    }
+
+    private fun launchImageViewerActivity(imageUrl: String, tag: String) {
+        val intent = Intent(this, ImageViewerActivity::class.java)
+        intent.putExtra(ImageViewerFragment.PARAM_IMAGE_URL, imageUrl)
+        intent.putExtra(ImageViewerFragment.PARAM_TAG, imageUrl)
         startActivity(intent)
     }
 
