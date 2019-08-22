@@ -20,4 +20,6 @@
     <string name="template_share">Vediamo % s, Movie DB lo qualifica con % .1f / 10</string>
     <string name="title_watchlist">Seguitas</string>
     <string name="loading">Caricamento</string>
+    <string name="privacy_policy">Politica della Privacittà</string>
+    <string name="error_opening_link">Errore nell\'apertura del link</string>
 </resources>

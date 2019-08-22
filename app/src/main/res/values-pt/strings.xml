@@ -20,4 +20,6 @@
     <string name="empty_detail">Seleccione aqui o filme que pretende ver</string>
     <string name="min_characters">A pesquisa deve conter pelo menos 3 caracteres</string>
     <string name="loading">Carregamento</string>
+    <string name="privacy_policy">Política de privacidade</string>
+    <string name="error_opening_link">Erro ao abrir o link</string>
 </resources>

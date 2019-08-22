@@ -12,10 +12,12 @@ import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.details.DetailsActivity
 import com.celapps.filmica.view.details.DetailsFragment
 import com.celapps.filmica.view.placeholder.PlaceholderFragment
+import com.celapps.filmica.view.privacypolicy.PrivacyPolicyActivity
 import com.celapps.filmica.view.search.SearchFragment
 import com.celapps.filmica.view.trending.TrendingFragment
 import com.celapps.filmica.view.watchlist.WatchlistFragment
 import com.facebook.stetho.Stetho
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_films.*
 import java.util.*
 
@@ -32,10 +34,14 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
     private lateinit var trendingFragment: TrendingFragment
     private lateinit var activeFragment: Fragment
 
-    //private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onItemClicked(film: Film) {
         this.showDetails(film.id, activeFragment.tag ?: TAG_FILMS)
+    }
+
+    override fun onPrivacyPolicyClicked() {
+        launchPrivacyPolicyActivity()
     }
 
     override fun onButtonClicked(film: Film) {
@@ -92,11 +98,13 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
 
     }
 
+
+
     override fun onResume() {
         super.onResume()
 
-        //firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        //firebaseAnalytics.setCurrentScreen(this, "Actividad de Films", null)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        firebaseAnalytics.setCurrentScreen(this, "Actividad de Films", null)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -180,6 +188,11 @@ class FilmsActivity: AppCompatActivity(), FilmsFragment.OnItemClickListener, Wat
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra("id", id)
         intent.putExtra("tag", tag)
+        startActivity(intent)
+    }
+
+    private fun launchPrivacyPolicyActivity() {
+        val intent = Intent(this, PrivacyPolicyActivity::class.java)
         startActivity(intent)
     }
 

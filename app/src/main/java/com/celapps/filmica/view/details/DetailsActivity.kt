@@ -3,10 +3,11 @@ package com.celapps.filmica.view.details
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.celapps.filmica.R
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class DetailsActivity : AppCompatActivity() {
 
-    //private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,11 +16,13 @@ class DetailsActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
 
             // ActionBar
-            val actionBar = supportActionBar!!
-            actionBar.setDisplayHomeAsUpEnabled(true) // Back Button
+            supportActionBar?.setDisplayHomeAsUpEnabled(true) // Back Button
 
             val id = intent.getStringExtra("id")
             val tag = intent.getStringExtra("tag")
+
+            // TODO: Mostar error
+            if (id == null || tag == null) return
 
             val detailsFragment =
                 DetailsFragment.newInstance(id, tag) // Creamos fragmento
@@ -33,8 +36,8 @@ class DetailsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        //firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        //firebaseAnalytics.setCurrentScreen(this, "Actividad de Detalle", null)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        firebaseAnalytics.setCurrentScreen(this, "Actividad de Detalle", null)
     }
 
     // Back View

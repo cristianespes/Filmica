@@ -17,6 +17,7 @@ import com.celapps.filmica.data.Film
 import com.celapps.filmica.data.FilmsRepository
 import com.celapps.filmica.view.films.FilmsActivity
 import com.celapps.filmica.view.util.SimpleTarget
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
 
@@ -24,7 +25,7 @@ class DetailsFragment : Fragment() {
 
     lateinit var listener: OnItemClickListener
 
-    //private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     // Método estático dentro de la clase
     companion object {
@@ -66,8 +67,10 @@ class DetailsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        //firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
-        //firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de detalle", null)
+        context?.let {
+            firebaseAnalytics = FirebaseAnalytics.getInstance(it)
+            firebaseAnalytics.setCurrentScreen(activity!!, "Fragmento de detalle", null)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
