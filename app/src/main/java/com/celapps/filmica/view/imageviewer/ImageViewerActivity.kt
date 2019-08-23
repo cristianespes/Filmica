@@ -1,11 +1,9 @@
 package com.celapps.filmica.view.imageviewer
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import com.celapps.filmica.R
 
 class ImageViewerActivity : AppCompatActivity(), ImageViewerFragment.OnBackClickListener {
@@ -20,6 +18,7 @@ class ImageViewerActivity : AppCompatActivity(), ImageViewerFragment.OnBackClick
         if (savedInstanceState == null) {
 
             // ActionBar
+            supportActionBar?.hide()
             /*supportActionBar?.setDisplayShowTitleEnabled(false)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
@@ -33,8 +32,14 @@ class ImageViewerActivity : AppCompatActivity(), ImageViewerFragment.OnBackClick
             val imageUrl = intent.getStringExtra(ImageViewerFragment.PARAM_IMAGE_URL)
             val tag = intent.getStringExtra(ImageViewerFragment.PARAM_TAG)
 
-            // TODO: Mostar error
-            if (id == null || imageUrl == null || tag == null) return
+
+            if (id == null || imageUrl == null || tag == null) {
+                AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.an_error_occurred_loading_image))
+                    .setPositiveButton(getString(R.string.accept)) { _, _ -> finish() }
+                    .show()
+                return
+            }
 
             val imageViewerFragment = ImageViewerFragment.newInstance(id, imageUrl, tag)
 

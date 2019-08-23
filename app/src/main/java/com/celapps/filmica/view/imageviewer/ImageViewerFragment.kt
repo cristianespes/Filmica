@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.celapps.filmica.R
+import com.celapps.filmica.data.ApiConstants
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_image_viewer.*
@@ -57,7 +58,7 @@ class ImageViewerFragment : Fragment() {
             progressBar.visibility = View.VISIBLE
 
             Picasso.get()
-                .load(url.replace("w500", "original")) // TODO
+                .load(url.replace(ApiConstants.SIZE_POSTER_500, ApiConstants.SIZE_POSTER_ORIGINAL))
                 .placeholder(android.R.color.black)
                 .error(R.drawable.film_placeholder)
                 .into(imageViewDetail, object : Callback {
