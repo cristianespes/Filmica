@@ -22,4 +22,6 @@
     <string name="loading">載入中</string>
     <string name="privacy_policy">隐私政策</string>
     <string name="error_opening_link">打开链接时出错</string>
+    <string name="accept">接受</string>
+    <string name="an_error_occurred_loading_image">加载图像时出错</string>
 </resources>

@@ -129,6 +129,11 @@ class DetailsFragment : Fragment() {
             FilmsRepository.TAG_SEARCH -> btnAdd.show()
             FilmsRepository.TAG_TRENDING -> btnAdd.show()
         }
+
+        film?.let { film ->
+            imgBackdrop.setOnClickListener { listener.onItemClicked(film.id, film.getBackdropUrl()) }
+            imgPoster.setOnClickListener { listener.onItemClicked(film.id, film.getPosterUrl()) }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -206,5 +211,6 @@ class DetailsFragment : Fragment() {
 
     interface OnItemClickListener {
         fun onButtonClicked(film: Film)
+        fun onItemClicked(id: String, imageUrl: String)
     }
 }

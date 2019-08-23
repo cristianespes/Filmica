@@ -22,4 +22,6 @@
     <string name="loading">Caricamento</string>
     <string name="privacy_policy">Politica della Privacittà</string>
     <string name="error_opening_link">Errore nell\'apertura del link</string>
+    <string name="accept">Accettare</string>
+    <string name="an_error_occurred_loading_image">Si è verificato un errore durante il caricamento dell\'immagine</string>
 </resources>

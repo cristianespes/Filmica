@@ -57,7 +57,7 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.1.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
-    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.google.firebase:firebase-core:17.1.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation 'com.facebook.stetho:stetho:1.5.1'
     testImplementation 'junit:junit:4.12'

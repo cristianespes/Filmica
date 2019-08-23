@@ -1,8 +1,12 @@
 package com.celapps.filmica.data
 
-const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/w500"
+
+const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/${ApiConstants.SIZE_POSTER_500}"
 
 object ApiConstants {
+    const val SIZE_POSTER_500 = "w500"
+    const val SIZE_POSTER_ORIGINAL = "original"
+
     val genres: Map<Int, String> = mapOf(
         28 to "Action",
         12 to "Adventure",
