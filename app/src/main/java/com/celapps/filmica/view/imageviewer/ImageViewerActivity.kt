@@ -1,6 +1,5 @@
 package com.celapps.filmica.view.imageviewer
 
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog

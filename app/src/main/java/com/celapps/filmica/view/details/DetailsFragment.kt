@@ -20,6 +20,7 @@ import com.celapps.filmica.view.util.SimpleTarget
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_details.*
+import org.joda.time.format.DateTimeFormat
 
 class DetailsFragment : Fragment() {
 
@@ -81,14 +82,47 @@ class DetailsFragment : Fragment() {
 
         film = FilmsRepository.findFilmById(id, tag)
 
+        val formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+
         film?.let {
             with(it) {
-                labelTitle.text =
-                    title // podemos utilizar el id indicado en el activity gracias al plugin android-extension
-                labelOverview.text = overview
-                labelGenre.text = genre
-                labelRelease.text = release
-                labelVotes.text = voteRating.toString()
+
+                labelTitle.text = title // podemos utilizar el id indicado en el activity gracias al plugin android-extension
+
+                if (voteRating == 0.toDouble()) {
+                    labelVotes.visibility = View.GONE
+                } else {
+                    labelVotes.text = voteRating.toString()
+                    labelVotes.visibility = View.VISIBLE
+                }
+
+                if (genre.isEmpty()) {
+                    titleGenre.visibility = View.GONE
+                    labelGenre.visibility = View.GONE
+                } else {
+                    labelGenre.text = genre
+                    titleGenre.visibility = View.VISIBLE
+                    labelGenre.visibility = View.VISIBLE
+                }
+
+                if (overview.isEmpty()) {
+                    titleOverview.visibility = View.GONE
+                    labelOverview.visibility = View.GONE
+                } else {
+                    labelOverview.text = overview
+                    titleOverview.visibility = View.VISIBLE
+                    labelOverview.visibility = View.VISIBLE
+                }
+
+                if (release.isEmpty()) {
+                    titleRelease.visibility = View.GONE
+                    labelRelease.visibility = View.GONE
+                } else {
+                    val dateRelease = formatter.parseDateTime(release)
+                    labelRelease.text = dateRelease.toString("dd MMMM, yyyy") ?: release
+                    titleRelease.visibility = View.VISIBLE
+                    labelRelease.visibility = View.VISIBLE
+                }
 
                 loadImage(it)
             }

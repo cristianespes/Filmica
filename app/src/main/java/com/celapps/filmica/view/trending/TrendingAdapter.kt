@@ -27,7 +27,13 @@ class TrendingAdapter(itemClickListener: ((Film) -> Unit)? = null): BaseFilmAdap
             with(itemView) {
                 labelTitle.text = film.title
                 titleGenre.text = film.genre
-                labelVotes.text = film.voteRating.toString()
+
+                if (film.voteRating == 0.toDouble()) {
+                    labelVotes.visibility = View.GONE
+                } else {
+                    labelVotes.text = film.voteRating.toString()
+                    labelVotes.visibility = View.VISIBLE
+                }
 
                 loadImage()
             }
