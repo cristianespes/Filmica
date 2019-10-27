@@ -27,7 +27,13 @@ class FilmsAdapter(itemClickListener: ((Film) -> Unit)? = null): BaseFilmAdapter
             with(itemView) {
                 labelTitle.text = film.title
                 titleGenre.text = film.genre
-                labelVotes.text = film.voteRating.toString()
+
+                if (film.voteRating == 0.toDouble()) {
+                    labelVotes.visibility = View.GONE
+                } else {
+                    labelVotes.text = film.voteRating.toString()
+                    labelVotes.visibility = View.VISIBLE
+                }
 
                 loadImage()
             }
@@ -48,7 +54,7 @@ class FilmsAdapter(itemClickListener: ((Film) -> Unit)? = null): BaseFilmAdapter
             itemView.imgPoster.tag = target
 
             Picasso.get()
-                .load(film?.getPosterUrl())
+                .load(film.getPosterUrl())
                 .placeholder(R.drawable.film_placeholder)
                 .error(R.drawable.film_placeholder)
                 .into(target)

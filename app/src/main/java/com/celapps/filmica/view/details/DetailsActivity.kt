@@ -1,11 +1,20 @@
 package com.celapps.filmica.view.details
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.celapps.filmica.R
+import com.celapps.filmica.data.Film
+import com.celapps.filmica.view.imageviewer.ImageViewerActivity
+import com.celapps.filmica.view.imageviewer.ImageViewerFragment
 import com.google.firebase.analytics.FirebaseAnalytics
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsActivity : AppCompatActivity(), DetailsFragment.OnItemClickListener {
+    override fun onButtonClicked(film: Film) {}
+
+    override fun onItemClicked(id: String, imageUrl: String) {
+        launchImageViewerActivity(id, imageUrl, "ImageViewerActivity")
+    }
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -28,7 +37,7 @@ class DetailsActivity : AppCompatActivity() {
                 DetailsFragment.newInstance(id, tag) // Creamos fragmento
 
             supportFragmentManager.beginTransaction()
-                .add(R.id.container_details, detailsFragment)
+                .add(R.id.containerDetails, detailsFragment)
                 .commit()
         }
     }
@@ -44,5 +53,13 @@ class DetailsActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun launchImageViewerActivity(id: String, imageUrl: String, tag: String) {
+        val intent = Intent(this, ImageViewerActivity::class.java)
+        intent.putExtra(ImageViewerFragment.PARAM_ID, id)
+        intent.putExtra(ImageViewerFragment.PARAM_IMAGE_URL, imageUrl)
+        intent.putExtra(ImageViewerFragment.PARAM_TAG, tag)
+        startActivity(intent)
     }
 }
